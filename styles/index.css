@@ -620,14 +620,20 @@
     .value-name { font-weight: 700; color: var(--coffee); margin-bottom: 4px; font-size: 0.9rem; }
     .value-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
 
-    /* ─── LOCATIONS ─────────────────────────────── */
-    #locations { background: var(--white); }
+        /* ─── LOCATIONS ─────────────────────────────── */
+    #locations {
+      background: var(--white);
+      width: 280%;
+      box-sizing: border-box;
+    }
 
     .locations-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin-top: 40px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .location-card {
@@ -639,6 +645,8 @@
       flex-direction: column;
       align-items: flex-start;
       min-height: 160px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .loc-icon {
