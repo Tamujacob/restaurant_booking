@@ -1,4 +1,4 @@
-// ─── MENU DATA ────────────────────────────────────
+//  MENU DATA 
 const menuData = [
   // BREAKFAST
   { id:1, cat:'breakfast', name:'Strawberry Pancakes', desc:'Fluffy pancakes topped with fresh strawberry compote and whipped cream.', price:28000, badge:'Popular', emoji:'🥞',
@@ -57,10 +57,10 @@ const menuData = [
     img:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400&q=80' },
 ];
 
-// ─── CART STATE ───────────────────────────────────
+//  CART STATE 
 const cart = {};
 
-// ─── RENDER MENU ──────────────────────────────────
+//  RENDER MENU
 function renderMenu(filter = 'all') {
   const grid = document.getElementById('menuGrid');
   grid.innerHTML = '';
@@ -85,7 +85,7 @@ function renderMenu(filter = 'all') {
   });
 }
 
-// ─── TAB SWITCHING ────────────────────────────────
+//  TAB SWITCHING 
 function switchTab(cat) {
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   const tabs = ['all', 'breakfast', 'mains', 'drinks', 'desserts'];
@@ -97,7 +97,7 @@ function switchTab(cat) {
   }
 }
 
-// ─── CART FUNCTIONS ───────────────────────────────
+//  CART FUNCTIONS 
 function addToCart(id) {
   const item = menuData.find(i => i.id === id);
   if (!item) return;
@@ -170,7 +170,7 @@ function checkout() {
   showModal('🎉', 'Order Placed!', 'Thank you! Your order has been received. Our kitchen is already working on it. Estimated delivery: 30–45 minutes.');
 }
 
-// ─── BOOKING ──────────────────────────────────────
+// BOOKING 
 function submitBooking() {
   const first = document.getElementById('bookFirst').value.trim();
   const last = document.getElementById('bookLast').value.trim();
@@ -192,7 +192,7 @@ function submitBooking() {
   });
 }
 
-// ─── TOAST ────────────────────────────────────────
+//  TOAST 
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -200,7 +200,7 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-// ─── MODAL ────────────────────────────────────────
+//  MODAL 
 function showModal(icon, title, msg) {
   document.getElementById('modalIcon').textContent = icon;
   document.getElementById('modalTitle').textContent = title;
@@ -212,12 +212,12 @@ function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
 }
 
-// ─── NAV HAMBURGER ────────────────────────────────
+//  NAV HAMBURGER 
 function toggleMenu() {
   document.getElementById('navLinks').classList.toggle('mobile-open');
 }
 
-// ─── INIT ─────────────────────────────────────────
+// INIT 
 document.addEventListener('DOMContentLoaded', () => {
   renderMenu('all');
   updateCartUI();
