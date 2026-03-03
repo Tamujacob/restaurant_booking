@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Café Javas — Where Kampala Eats</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles/index.css" />
+  <link rel="stylesheet" href="{% static 'styles/index.css' %}" />
 </head>
 <body>
 
@@ -448,7 +449,7 @@
 </div>
 
 <!--  SCRIPTS  -->
-<script src="scripts/index.js"></script>
+<script src="{% static 'scripts/index.js' %}"></script>
 
 </body>
 </html>
