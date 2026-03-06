@@ -128,7 +128,7 @@
   </div>
 </section>
 
-<!--  BOOKING  -->
+<!-- BOOKING -->
 <section id="book">
   <div class="book-inner">
     <div class="book-left">
@@ -142,70 +142,76 @@
         <li><span class="perk-icon">🅿️</span> Ample parking at most branches</li>
         <li><span class="perk-icon">📞</span> +256 313 72 00 00</li>
       </ul>
+
+      <!-- Success / Error messages from Django -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="booking-message booking-message--{{ message.tags }}" id="bookingMsg">
+            {% if message.tags == 'success' %}✅{% else %}⚠️{% endif %}
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
     </div>
+
     <div class="booking-form">
       <div class="form-title">Make a Reservation</div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">First Name</label>
-          <input type="text" class="form-input" placeholder="Your first name" id="bookFirst" />
+
+      <form method="POST" action="" id="bookingForm">
+        {% csrf_token %}
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            {{ form.first_name }}
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            {{ form.last_name }}
+          </div>
         </div>
+
         <div class="form-group">
-          <label class="form-label">Last Name</label>
-          <input type="text" class="form-input" placeholder="Your last name" id="bookLast" />
+          <label class="form-label">Email Address</label>
+          {{ form.email }}
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email Address</label>
-        <input type="email" class="form-input" placeholder="you@email.com" id="bookEmail" />
-      </div>
-      <div class="form-group">
-        <label class="form-label">Phone Number</label>
-        <input type="tel" class="form-input" placeholder="+256 700 000 000" id="bookPhone" />
-      </div>
-      <div class="form-row">
+
         <div class="form-group">
-          <label class="form-label">Date</label>
-          <input type="date" class="form-input" id="bookDate" />
+          <label class="form-label">Phone Number</label>
+          {{ form.phone }}
         </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            {{ form.date }}
+          </div>
+          <div class="form-group">
+            <label class="form-label">Time</label>
+            {{ form.time }}
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Guests</label>
+            {{ form.guests }}
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location</label>
+            {{ form.location }}
+          </div>
+        </div>
+
         <div class="form-group">
-          <label class="form-label">Time</label>
-          <input type="time" class="form-input" id="bookTime" />
+          <label class="form-label">Special Requests</label>
+          {{ form.special_requests }}
         </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Guests</label>
-          <select class="form-select" id="bookGuests">
-            <option>1 person</option>
-            <option>2 people</option>
-            <option>3 people</option>
-            <option selected>4 people</option>
-            <option>5 people</option>
-            <option>6 people</option>
-            <option>7 – 10 people</option>
-            <option>11+ people (group)</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Location</label>
-          <select class="form-select" id="bookLocation">
-            <option>Kira Road</option>
-            <option>Kampala Boulevard</option>
-            <option>Oasis Mall</option>
-            <option>Nakawa</option>
-            <option>Namirembe</option>
-            <option>Lugogo</option>
-            <option>Bombo Road</option>
-            <option>Victoria Mall, Entebbe</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Special Requests</label>
-        <textarea class="form-textarea" id="bookNote" placeholder="Dietary requirements, birthday surprises, seating preferences…"></textarea>
-      </div>
-      <button class="submit-btn" onclick="submitBooking()">Confirm Reservation</button>
+
+        <button type="submit" class="submit-btn">Confirm Reservation</button>
+
+      </form>
     </div>
   </div>
 </section>
