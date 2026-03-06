@@ -1,6 +1,6 @@
 # ☕ Café Javas Website Clone
 
-> A pixel-perfect clone of the [Café Javas Uganda](https://cafejavas.co.ug) restaurant website — rebuilt from scratch using plain HTML, CSS, and JavaScript.
+> A clone of the [Café Javas Uganda](https://cafejavas.co.ug) restaurant website — rebuilt from scratch using HTML, CSS, JavaScript, and Django as the backend.
 
 ---
 
@@ -10,7 +10,7 @@ This project is a **clone of the official Café Javas website** — one of Ugand
 
 The clone replicates the look, feel, and core functionality of the Café Javas website, including their menu categories (Big on Breakfast, Generous Big Meals, Perfected Drinks, and Decadent Desserts), their branch locations, table booking experience, and overall warm coffee-shop aesthetic.
 
-It was built purely for **learning and portfolio purposes** — no frameworks, no libraries, just HTML, CSS, and vanilla JavaScript.
+It is built for **learning and portfolio purposes** using vanilla HTML, CSS, and JavaScript on the frontend, with **Django** powering the backend.
 
 ---
 
@@ -24,6 +24,7 @@ It was built purely for **learning and portfolio purposes** — no frameworks, n
 | 📅 Book a Table | Reservation form with date, time, guests, location, and special requests |
 | 🏢 About Us | Brand story, values, and a photo layout matching Café Javas' identity |
 | 📍 Locations | All 9 Uganda branches (Kampala + Entebbe) listed with opening hours |
+| 🔐 Admin Login | Custom branded admin login page matching the Café Javas identity |
 | 📱 Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
 
 ---
@@ -31,30 +32,63 @@ It was built purely for **learning and portfolio purposes** — no frameworks, n
 ## 🗂️ File Structure
 
 ```
-cafe-javas-clone/
-├── index.html          # All page structure and content
-├── index.js            # Menu data, cart logic, booking, and interactions
-└── styles/
-    └── index.css       # Full styling, layout, animations, and responsiveness
+restaurant_booking/
+├── cafejavas/                  # Django project settings
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+├── core/                       # Django app
+│   ├── templates/
+│   │   ├── index.html          # Main website page
+│   │   └── login.html          # Custom admin login page
+│   ├── static/
+│   │   ├── styles/
+│   │   │   └── index.css       # All styling and responsive layout
+│   │   └── scripts/
+│   │       └── index.js        # Menu data, cart logic, and interactions
+│   ├── views.py                # Page views
+│   ├── urls.py                 # App URL routes
+│   ├── models.py               # Database models
+│   └── admin.py
+├── manage.py                   # Django management commands
+├── README.md
+└── .gitignore
 ```
 
 ---
 
 ## 🚀 Running the Project
 
-No setup or installation required. It runs entirely in the browser.
+### Requirements
+- Python 3.x
+- Django
 
-### Quickest way — open directly
-Double-click `index.html` and it opens in your browser. Done.
-
-### Recommended — Live Server (VS Code)
-1. Install the **Live Server** extension in VS Code
-2. Right-click `index.html`
-3. Select **"Open with Live Server"**
-
-### Alternative — Node.js
+### Install Django
 ```bash
-npx serve .
+pip install django
+```
+
+### Run the development server
+```bash
+py manage.py runserver
+```
+
+Then open your browser at:
+```
+http://127.0.0.1:8000/          → Main website
+http://127.0.0.1:8000/login/    → Admin login page
+http://127.0.0.1:8000/admin/    → Django admin dashboard
+```
+
+### Create an admin superuser
+```bash
+py manage.py createsuperuser
+```
+
+### Apply migrations
+```bash
+py manage.py migrate
 ```
 
 ---
@@ -76,7 +110,7 @@ The clone closely mirrors Café Javas' warm, coffee-house visual identity:
 
 ## 🧠 JavaScript Overview (`index.js`)
 
-All interactivity lives in `index.js`. Here's what each function does:
+All frontend interactivity lives in `index.js`:
 
 | Function | Purpose |
 |---|---|
@@ -90,6 +124,18 @@ All interactivity lives in `index.js`. Here's what each function does:
 | `showToast(msg)` | Displays a brief notification pop-up |
 | `showModal(...)` | Shows a full confirmation dialog |
 | `toggleMenu()` | Opens or closes the mobile navigation menu |
+
+---
+
+## 🐍 Django Overview
+
+| File | Purpose |
+|---|---|
+| `cafejavas/settings.py` | Project configuration — installed apps, static files, templates |
+| `cafejavas/urls.py` | Root URL router — points to the `core` app |
+| `core/views.py` | Renders the home page and admin login page |
+| `core/urls.py` | Defines URL patterns for all pages |
+| `core/models.py` | Database models (bookings, orders — to be built out) |
 
 ---
 
@@ -134,9 +180,23 @@ Matching the real Café Javas branches:
 
 - **HTML5** — Page structure
 - **CSS3** — Styling, grid, flexbox, animations
-- **Vanilla JavaScript** — All interactivity, no frameworks
+- **Vanilla JavaScript** — All frontend interactivity, no frameworks
+- **Django** — Python backend framework
+- **SQLite** — Default Django database
 - **Google Fonts** — Playfair Display, Lato, Dancing Script
 - **Unsplash** — Food photography
+
+---
+
+## 🔮 Planned Backend Features
+
+| Feature | Status |
+|---|---|
+| Save table bookings to database | 🔜 Coming soon |
+| Store menu items in database | 🔜 Coming soon |
+| Order tracking system | 🔜 Coming soon |
+| User accounts and login | 🔜 Coming soon |
+| Django admin dashboard | ✅ Available at `/admin/` |
 
 ---
 
