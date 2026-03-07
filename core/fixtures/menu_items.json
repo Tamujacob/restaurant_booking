@@ -1,0 +1,338 @@
+[
+    {
+        "model": "core.menuitem",
+        "pk": 1,
+        "fields": {
+            "cat": "breakfast",
+            "name": "Strawberry Pancakes",
+            "desc": "Fluffy pancakes topped with fresh strawberry compote and whipped cream.",
+            "price": 28000,
+            "badge": "Popular",
+            "emoji": "🥞",
+            "img": "https://images.unsplash.com/photo-1565299543923-37dd37887442?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 2,
+        "fields": {
+            "cat": "breakfast",
+            "name": "Breakfast Burger",
+            "desc": "Loaded breakfast patty burger with egg, cheese, and grilled tomato.",
+            "price": 32000,
+            "badge": "New",
+            "emoji": "🍔",
+            "img": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 3,
+        "fields": {
+            "cat": "breakfast",
+            "name": "Full English Breakfast",
+            "desc": "Eggs, bacon, sausage, beans, toast, and fresh grilled tomatoes.",
+            "price": 35000,
+            "badge": "",
+            "emoji": "🍳",
+            "img": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 4,
+        "fields": {
+            "cat": "breakfast",
+            "name": "Avocado Toast",
+            "desc": "Sourdough toast with smashed avocado, poached egg, and chili flakes.",
+            "price": 24000,
+            "badge": "Healthy",
+            "emoji": "🥑",
+            "img": "https://images.unsplash.com/photo-1541519227354-08fa5d50c820?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 5,
+        "fields": {
+            "cat": "breakfast",
+            "name": "Chicken Waffles",
+            "desc": "Crispy chicken on golden Belgian waffles drizzled with maple syrup.",
+            "price": 36000,
+            "badge": "Fan Fave",
+            "emoji": "🧇",
+            "img": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 6,
+        "fields": {
+            "cat": "breakfast",
+            "name": "Omelette & Wedges",
+            "desc": "Three-egg cheese omelette served with seasoned potato wedges.",
+            "price": 26000,
+            "badge": "",
+            "emoji": "🍳",
+            "img": "https://images.unsplash.com/photo-1510693206972-df098062cb71?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 7,
+        "fields": {
+            "cat": "mains",
+            "name": "Buffalo Chicken Wrap",
+            "desc": "Crispy buffalo chicken, lettuce, tomato, and ranch in a toasted wrap.",
+            "price": 30000,
+            "badge": "Spicy",
+            "emoji": "🌯",
+            "img": "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 8,
+        "fields": {
+            "cat": "mains",
+            "name": "Pasta Carbonara",
+            "desc": "Classic Italian pasta with creamy egg sauce, pancetta, and parmesan.",
+            "price": 29000,
+            "badge": "",
+            "emoji": "🍝",
+            "img": "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 9,
+        "fields": {
+            "cat": "mains",
+            "name": "Grilled Salmon",
+            "desc": "Atlantic salmon fillet with steamed vegetables and lemon butter sauce.",
+            "price": 48000,
+            "badge": "Premium",
+            "emoji": "🐟",
+            "img": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 10,
+        "fields": {
+            "cat": "mains",
+            "name": "Club Sandwich",
+            "desc": "Triple-decker with turkey, bacon, lettuce, tomato, and mayo on toasted bread.",
+            "price": 27000,
+            "badge": "",
+            "emoji": "🥪",
+            "img": "https://images.unsplash.com/photo-1567234669003-dce7a7a88821?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 11,
+        "fields": {
+            "cat": "mains",
+            "name": "Caesar Salad",
+            "desc": "Crisp romaine, croutons, parmesan, and house Caesar dressing.",
+            "price": 22000,
+            "badge": "Light",
+            "emoji": "🥗",
+            "img": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 12,
+        "fields": {
+            "cat": "mains",
+            "name": "BBQ Beef Ribs",
+            "desc": "Slow-cooked ribs glazed with smoky BBQ sauce, served with fries.",
+            "price": 55000,
+            "badge": "Premium",
+            "emoji": "🍖",
+            "img": "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 13,
+        "fields": {
+            "cat": "drinks",
+            "name": "Flat White",
+            "desc": "Smooth espresso with steamed micro-foam milk — our barista specialty.",
+            "price": 12000,
+            "badge": "Bestseller",
+            "emoji": "☕",
+            "img": "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 14,
+        "fields": {
+            "cat": "drinks",
+            "name": "Peanut Butter Milkshake",
+            "desc": "Our legendary creamy milkshake with real peanut butter and chocolate.",
+            "price": 16000,
+            "badge": "Must Try",
+            "emoji": "🥛",
+            "img": "https://images.unsplash.com/photo-1568158879083-c42860933ed7?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 15,
+        "fields": {
+            "cat": "drinks",
+            "name": "Mango Smoothie",
+            "desc": "Fresh mango blended with yoghurt, honey, and a squeeze of lime.",
+            "price": 14000,
+            "badge": "Fresh",
+            "emoji": "🥭",
+            "img": "https://images.unsplash.com/photo-1553530979-fbb9e4aee36f?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 16,
+        "fields": {
+            "cat": "drinks",
+            "name": "Iced Latte",
+            "desc": "Double espresso over ice with your choice of milk.",
+            "price": 13000,
+            "badge": "",
+            "emoji": "🧊",
+            "img": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 17,
+        "fields": {
+            "cat": "drinks",
+            "name": "Fresh Passion Juice",
+            "desc": "Tropical passion fruit juice, freshly squeezed and chilled.",
+            "price": 10000,
+            "badge": "Local Fave",
+            "emoji": "🍹",
+            "img": "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 18,
+        "fields": {
+            "cat": "drinks",
+            "name": "Hot Chocolate",
+            "desc": "Rich Belgian dark chocolate with steamed milk and marshmallows.",
+            "price": 13000,
+            "badge": "",
+            "emoji": "🍫",
+            "img": "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 19,
+        "fields": {
+            "cat": "desserts",
+            "name": "Chocolate Lava Cake",
+            "desc": "Warm chocolate cake with a molten centre, served with vanilla ice cream.",
+            "price": 20000,
+            "badge": "Indulgent",
+            "emoji": "🍫",
+            "img": "https://images.unsplash.com/photo-1574085733277-851d9d856a3a?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 20,
+        "fields": {
+            "cat": "desserts",
+            "name": "New York Cheesecake",
+            "desc": "Classic baked cheesecake with a buttery biscuit base and berry coulis.",
+            "price": 18000,
+            "badge": "Bestseller",
+            "emoji": "🍰",
+            "img": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 21,
+        "fields": {
+            "cat": "desserts",
+            "name": "Crepe Suzette",
+            "desc": "Thin crepes with orange butter caramel sauce, served warm.",
+            "price": 16000,
+            "badge": "",
+            "emoji": "🍮",
+            "img": "https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 22,
+        "fields": {
+            "cat": "desserts",
+            "name": "Ice Cream Sundae",
+            "desc": "Three scoops of gelato, hot fudge, caramel, whipped cream and a cherry.",
+            "price": 15000,
+            "badge": "Fun",
+            "emoji": "🍨",
+            "img": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 23,
+        "fields": {
+            "cat": "desserts",
+            "name": "Tiramisu",
+            "desc": "Classic Italian dessert with mascarpone, espresso, and cocoa dust.",
+            "price": 19000,
+            "badge": "Italian",
+            "emoji": "🍮",
+            "img": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&q=80",
+            "is_available": true
+        }
+    },
+    {
+        "model": "core.menuitem",
+        "pk": 24,
+        "fields": {
+            "cat": "desserts",
+            "name": "Fruit Salad",
+            "desc": "Seasonal fresh fruits with a drizzle of honey and mint leaves.",
+            "price": 12000,
+            "badge": "Healthy",
+            "emoji": "🍓",
+            "img": "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400&q=80",
+            "is_available": true
+        }
+    }
+]
