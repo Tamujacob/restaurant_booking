@@ -11,7 +11,7 @@ class TableBookingAdmin(admin.ModelAdmin):
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ['cat', 'name', 'desc', 'price', 'badge', 'is_available']
+    list_display = ['cat', 'name', 'price', 'badge', 'is_available']
     list_filter = ['cat', 'is_available']
     search_fields = ['name', 'cat']
     list_editable = ['is_available']
