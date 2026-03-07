@@ -1,4 +1,5 @@
 from django.db import models
+# Create your models here.
 
 class TableBooking(models.Model):
 
@@ -64,4 +65,28 @@ class TableBooking(models.Model):
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
-# Create your models here.
+
+class MenuItem(models.Model):
+
+    #categories
+    CATEGORY_CHOICES = [
+    ('breakfast', 'Breakfast'),
+    ('mains', 'Mains'),
+    ('drinks', 'Drinks'),
+    ('desserts', 'Desserts'),
+]
+    cat = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    name = models.CharField(max_length=50)
+    desc = models.TextField()
+    price = models.IntegerField()
+    badge = models.CharField(max_length=50, blank=True)
+    emoji = models.CharField(max_length=10)
+    img = models.URLField()
+    is_available = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
