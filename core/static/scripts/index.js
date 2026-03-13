@@ -21,12 +21,12 @@ function switchTab(cat) {
 }
 
 //  CART FUNCTIONS 
-function addToCart(id) {
-  const item = menuData.find(i => i.id === id);
-  if (!item) return;
-  cart[id] = cart[id] ? { ...cart[id], qty: cart[id].qty + 1 } : { ...item, qty: 1 };
+function addToCart(id, name, price, emoji) {
+  cart[id] = cart[id]
+    ? { ...cart[id], qty: cart[id].qty + 1 }
+    : { id, name, price, emoji, qty: 1 };
   updateCartUI();
-  showToast(`${item.emoji} ${item.name} added!`);
+  showToast(`${emoji} ${name} added!`);
 }
 
 function removeFromCart(id) {
@@ -66,7 +66,7 @@ function updateCartUI() {
           <div class="ci-qty">
             <button class="qty-btn" onclick="removeFromCart(${item.id})">−</button>
             <span class="qty-val">${item.qty}</span>
-            <button class="qty-btn" onclick="addToCart(${item.id})">+</button>
+            <button class="qty-btn" onclick="addToCart(${item.id}, '${item.name}', ${item.price}, '${item.emoji}')">+</button>
           </div>
         </div>
       </div>
@@ -93,27 +93,6 @@ function checkout() {
   showModal('🎉', 'Order Placed!', 'Thank you! Your order has been received. Our kitchen is already working on it. Estimated delivery: 30–45 minutes.');
 }
 
-// BOOKING 
-function submitBooking() {
-  const first = document.getElementById('bookFirst').value.trim();
-  const last = document.getElementById('bookLast').value.trim();
-  const email = document.getElementById('bookEmail').value.trim();
-  const date = document.getElementById('bookDate').value;
-  const time = document.getElementById('bookTime').value;
-  const location = document.getElementById('bookLocation').value;
-
-  if (!first || !last || !email || !date || !time) {
-    showToast('⚠️ Please fill all required fields');
-    return;
-  }
-
-  const d = new Date(date);
-  const dateStr = d.toLocaleDateString('en-UG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  showModal('📅', 'Table Reserved!', `Thank you, ${first}! Your table at Café Javas ${location} is reserved for ${dateStr} at ${time}. A confirmation will be sent to ${email}.`);
-  ['bookFirst', 'bookLast', 'bookEmail', 'bookPhone', 'bookDate', 'bookTime', 'bookNote'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-}
 
 //  TOAST 
 function showToast(msg) {
@@ -142,7 +121,6 @@ function toggleMenu() {
 
 // INIT 
 document.addEventListener('DOMContentLoaded', () => {
-  renderMenu('all');
   updateCartUI();
 
   // Set min date for booking to today
