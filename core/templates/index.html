@@ -124,8 +124,25 @@
   </div>
 
   <div class="menu-grid" id="menuGrid">
-    <!-- Populated by index.js -->
-  </div>
+  {% for item in menu_items %}
+    <div class="menu-item visible" data-cat="{{ item.cat }}">
+      <div class="item-img">
+        <img src="{{ item.img }}" alt="{{ item.name }}" loading="lazy" />
+        {% if item.badge %}
+          <span class="item-badge">{{ item.badge }}</span>
+        {% endif %}
+      </div>
+      <div class="item-body">
+        <div class="item-name">{{ item.name }}</div>
+        <div class="item-desc">{{ item.desc }}</div>
+        <div class="item-footer">
+          <div class="item-price">UGX {{ item.price }}</div>
+          <button class="add-btn" onclick="addToCart({{ item.id }}, '{{ item.name }}', {{ item.price }}, '{{ item.emoji }}')" title="Add to order">+</button>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 </section>
 
 <!-- BOOKING -->
