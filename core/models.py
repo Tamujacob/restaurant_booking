@@ -98,7 +98,7 @@ class Order(models.Model):
         ('out_for_delivery', 'Out for Delivery'),
         ('delivered', 'Delivered'),
         ('cancelled', 'Cancelled'),
-]
+    ]
 
 
     #  CUSTOMER DETAILS 
