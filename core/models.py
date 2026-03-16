@@ -93,11 +93,11 @@ class MenuItem(models.Model):
 class Order(models.Model): 
 
     STATUS_CHOICES = [
-    ('pending', 'Pending'),
-    ('approved', 'Approved'),
-    ('out_for_delivery', 'Out for Delivery'),
-    ('delivered', 'Delivered'),
-    ('cancelled', 'Cancelled'),
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('out_for_delivery', 'Out for Delivery'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled'),
 ]
 
 
@@ -114,10 +114,10 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-class Meta:
-    ordering = ['-created_at']
-    verbose_name = 'Order'
-    verbose_name_plural = 'Orders'
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Order'
+        verbose_name_plural = 'Orders'
 
-def __str__(self):
-    return f"{self.first_name} {self.last_name} — {self.date} at {self.delivery_time}"
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} — {self.date} at {self.delivery_time}"
