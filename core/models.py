@@ -89,4 +89,35 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.name
+         
+class Order(models.Model): 
 
+    STATUS_CHOICES = [
+    ('pending', 'Pending'),
+    ('approved', 'Approved'),
+    ('out_for_delivery', 'Out for Delivery'),
+    ('delivered', 'Delivered'),
+    ('cancelled', 'Cancelled'),
+]
+
+
+    #  CUSTOMER DETAILS 
+    first_name    = models.CharField(max_length=100)
+    last_name     = models.CharField(max_length=100)
+    email         = models.EmailField()
+    phone         = models.CharField(max_length=20, blank=True)
+    delivery_location = models.CharField(max_length=100)
+    date          = models.DateField()
+    total_price   = models.IntegerField()
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    delivery_time = models.TimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+class Meta:
+    ordering = ['-created_at']
+    verbose_name = 'Order'
+    verbose_name_plural = 'Orders'
+
+def __str__(self):
+    return f"{self.first_name} {self.last_name} — {self.date} at {self.delivery_time}"
