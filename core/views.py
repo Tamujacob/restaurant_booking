@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import TableBookingForm
+from .models import MenuItem
 
 def home(request):
     form = TableBookingForm()
@@ -14,7 +15,8 @@ def home(request):
         else:
             messages.error(request, "Something went wrong. Please check your details and try again.")
 
-    return render(request, 'index.html', {'form': form})
+    menu_items = MenuItem.objects.filter(is_available=True)
+    return render(request, 'index.html', {'form': form, 'menu_items': menu_items})
 
 
 def admin_login(request):
