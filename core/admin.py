@@ -18,12 +18,15 @@ class MenuItemAdmin(admin.ModelAdmin):
     
 @admin.register(Order)  
 class OrderAdmin(admin.ModelAdmin):
-    list_display    = [ 'firstname', 'last_name', 'email', 'phone', 'delivery_location', 'date', 'total_price', 'status', 'created_at']  
-    list_filter     = [ 'status', 'location', 'phone']
-    search_fields   = [ 'firstname', 'lastname', 'email', 'phone']
-    ordering        = ['created_at']
-    list_editable   = ['status']
+    list_display    = [ 'first_name', 'last_name', 'email', 'phone', 'delivery_location', 'date', 'total_price', 'status', 'created_at']  
+    list_filter     = [ 'status', 'date', 'delivery_location']
+    search_fields   = [ 'first_name', 'last_name', 'email', 'phone']
+    ordering        = ['-created_at']
+    list_editable   = ['status', 'date', 'delivery_location']
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-      
+    list_display   = [ 'item_name', 'order', 'menu_item', 'quantity', 'unit_price'] 
+    list_filter    = [ 'item_name', 'menu_item'] 
+    search_fields  = ['item_name']
+    list_editable  = ['quantity']
