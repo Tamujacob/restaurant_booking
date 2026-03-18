@@ -128,8 +128,19 @@ class OrderItem(models.Model) :
     item_name        = models.CharField( max_length=150)    
     order            = models.ForeignKey(Order, on_delete=models.CASCADE)
     menu_item        = models.ForeignKey(MenuItem, on_delete=models.SET_NULL, null=True)
-    number_of_items  = models.IntegerField()
+    quantity         = models.IntegerField()
     unit_price       = models.IntegerField()    
-    total_price      = models.IntegerField()      
+    
+    class Meta:
+        verbose_name = 'Order Item'
+        verbose_name_plural = 'Order Items'
+    
+    def __str__(self):
+        return f"{self.item_name} x{self.quantity} at UGX {self.unit_price}"
+    
+    @property
+    def total_price(self):
+        return self.unit_price * self.quantity     
+    
 
 
