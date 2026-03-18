@@ -121,3 +121,15 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} — {self.date} at {self.delivery_time}"
+    
+class OrderItem(models.Model) :
+
+    #order_details
+    item_name        = models.CharField( max_length=150)    
+    order            = models.ForeignKey(Order, on_delete=models.CASCADE)
+    menu_item        = models.ForeignKey(MenuItem, on_delete=models.SET_NULL, null=True)
+    number_of_items  = models.IntegerField()
+    unit_price       = models.IntegerField()    
+    total_price      = models.IntegerField()      
+
+
