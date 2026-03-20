@@ -8,6 +8,8 @@ import json
 
 def home(request):
     form = TableBookingForm()
+    order_form = OrderForm()
+
 
     if request.method == 'POST':
         form = TableBookingForm(request.POST)
@@ -19,8 +21,11 @@ def home(request):
             messages.error(request, "Something went wrong. Please check your details and try again.")
 
     menu_items = MenuItem.objects.filter(is_available=True)
-    return render(request, 'index.html', {'form': form, 'menu_items': menu_items})
-
+    return render(request, 'index.html', {
+    'form': form,
+    'order_form': order_form,    
+    'menu_items': menu_items,
+})
 
 def admin_login(request):
     return render(request, 'login.html')
@@ -50,8 +55,10 @@ def place_order(request):
                     quantity   = item['qty'],
                     unit_price = item['price'],
                 )
-            
+
+            # ✅ keep only this one
             return JsonResponse({'status': 'success', 'message': f"Thank you {order.first_name}! Your order has been placed and will be delivered to {order.delivery_location}."})
+            
         else:
             return JsonResponse({'status': 'error', 'message': 'Please fill in all required fields correctly.'})
     
