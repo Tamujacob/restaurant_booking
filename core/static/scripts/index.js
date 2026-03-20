@@ -85,14 +85,48 @@ function closeCart() {
 }
 
 function checkout() {
+  // Step 1 — check cart is not empty
   const items = Object.values(cart);
-  if (items.length === 0) return;
-  Object.keys(cart).forEach(k => delete cart[k]);
-  updateCartUI();
-  closeCart();
-  showModal('🎉', 'Order Placed!', 'Thank you! Your order has been received. Our kitchen is already working on it. Estimated delivery: 30–45 minutes.');
-}
+  if (items.length === 0) {
+    showToast('⚠️ Your cart is empty!');
+    return;
+  }
 
+  // Step 2 — collect form data
+  const form = document.getElementById('orderForm');
+  const formData = new FormData(form);
+
+  // Step 3 — add cart items to the form data as JSON
+  const cartItems = items.map(item => ({
+    id:    item.id,
+    name:  item.name,
+    price: item.price,
+    qty:   item.qty,
+  }));
+  formData.append('cart_items', JSON.stringify(cartItems));
+
+  // Step 4 — send to Django
+  fetch('/order/', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 'success') {
+      // Step 5 — success
+      Object.keys(cart).forEach(k => delete cart[k]);
+      updateCartUI();
+      closeCart();
+      showModal('🎉', 'Order Placed!', data.message);
+    } else {
+      // Step 6 — error
+      showToast('⚠️ ' + data.message);
+    }
+  })
+  .catch(error => {
+    showToast('⚠️ Something went wrong. Please try again.');
+  });
+}
 
 //  TOAST 
 function showToast(msg) {
