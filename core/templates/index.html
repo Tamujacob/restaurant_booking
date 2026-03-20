@@ -388,7 +388,6 @@
   </div>
 </section>
 
-
 <!--  FOOTER  -->
 <footer>
   <div class="footer-top">
@@ -439,17 +438,67 @@
 <!--  CART OVERLAY & SIDEBAR  -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
+
   <div class="cart-header">
     <div class="cart-title">Your Order</div>
     <button class="cart-close" onclick="closeCart()">✕</button>
   </div>
+
   <div class="cart-items" id="cartItems"></div>
+
   <div class="cart-footer" id="cartFooter" style="display:none">
+
+    <!-- total price -->
     <div class="cart-total">
       <span>Total</span>
       <span class="cart-total-price" id="cartTotal">UGX 0</span>
     </div>
-    <button class="checkout-btn" onclick="checkout()">Place Order</button>
+
+    <!-- order form -->
+    <form method="POST" id="orderForm">
+      {% csrf_token %}
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          {{ order_form.first_name }}
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          {{ order_form.last_name }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        {{ order_form.email }}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        {{ order_form.phone }}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Delivery Address</label>
+        {{ order_form.delivery_location }}
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          {{ order_form.date }}
+        </div>
+        <div class="form-group">
+          <label class="form-label">Time</label>
+          {{ order_form.delivery_time }}
+        </div>
+      </div>
+
+      <button type="button" onclick="checkout()" class="checkout-btn">Confirm Order</button>
+
+    </form>
+
   </div>
 </div>
 
