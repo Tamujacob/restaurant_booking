@@ -525,17 +525,15 @@ section { padding: 90px 60px; }
 .cart-footer {
   padding: 20px;
   border-top: 1px solid var(--latte);
-  overflow-y: scroll;              /* ← always show scrollbar */
-  max-height: calc(100vh - 200px); /* ← takes remaining screen space */
+  overflow-y: scroll;
+  height: calc(100vh - 400px);    /* ← increased height */
   flex-shrink: 0;
-  direction: rtl;                  /* ← moves scrollbar to left side */
+  direction: rtl;
 }
 
-/* ← this fixes the content direction back to normal */
 .cart-footer > * {
   direction: ltr;
 }
-
 .cart-total {
   display: flex; justify-content: space-between;
   font-size: 1rem; font-weight: 700; color: var(--coffee);
