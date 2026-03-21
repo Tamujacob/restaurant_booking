@@ -56,7 +56,7 @@ def place_order(request):
                     unit_price = item['price'],
                 )
 
-            # ✅ keep only this one
+           
             return JsonResponse({'status': 'success', 'message': f"Thank you {order.first_name}! Your order has been placed and will be delivered to {order.delivery_location}."})
             
         else:

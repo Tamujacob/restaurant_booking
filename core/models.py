@@ -140,7 +140,21 @@ class OrderItem(models.Model) :
     
     @property
     def total_price(self):
-        return self.unit_price * self.quantity     
+        return self.unit_price * self.quantity   
+
+
+class Location(models.Model):
+    branch_name     = models.CharField(max_length=150)
+    address         = models.CharField(max_length=150)
+    city            = models.CharField(max_length=150)
+    phone           = models.CharField(max_length=20, blank=True)
+    opening_time    = models.TimeField()
+    closing_time    = models.TimeField()
+    is_active       = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = 'location'
+        verbose_name_plural = 'locations'
     
-
-
+    def __str__(self):
+        return self.branch_name
