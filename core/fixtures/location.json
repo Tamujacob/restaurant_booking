@@ -1,0 +1,119 @@
+[
+    {
+        "model": "core.location",
+        "pk": 1,
+        "fields": {
+            "branch_name": "Kira Road",
+            "address": "Kira Road, Kampala",
+            "city": "Kampala",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 2,
+        "fields": {
+            "branch_name": "Kampala Boulevard",
+            "address": "Kampala Boulevard, Kampala",
+            "city": "Kampala",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 3,
+        "fields": {
+            "branch_name": "Oasis Mall",
+            "address": "Access Road, Oasis Mall, Kampala",
+            "city": "Kampala",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 4,
+        "fields": {
+            "branch_name": "Nakawa",
+            "address": "Nakawa, Kampala",
+            "city": "Kampala",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 5,
+        "fields": {
+            "branch_name": "Namirembe",
+            "address": "Namirembe Road, Kampala",
+            "city": "Kampala",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 6,
+        "fields": {
+            "branch_name": "Lugogo",
+            "address": "Lugogo Bypass, Kampala",
+            "city": "Kampala",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 7,
+        "fields": {
+            "branch_name": "Bombo Road",
+            "address": "Bombo Road, Kampala",
+            "city": "Kampala",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 8,
+        "fields": {
+            "branch_name": "Parliamentary Avenue",
+            "address": "Parliamentary Avenue, Kampala",
+            "city": "Kampala",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    },
+    {
+        "model": "core.location",
+        "pk": 9,
+        "fields": {
+            "branch_name": "Victoria Mall, Entebbe",
+            "address": "Victoria Mall, Entebbe",
+            "city": "Entebbe",
+            "phone": "+256 313 720000",
+            "opening_time": "06:30:00",
+            "closing_time": "23:00:00",
+            "is_active": true
+        }
+    }
+]

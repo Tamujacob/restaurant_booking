@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TableBooking, MenuItem, Order, OrderItem
+from .models import TableBooking, MenuItem, Order, OrderItem, Location
 
 @admin.register(TableBooking)
 class TableBookingAdmin(admin.ModelAdmin):
@@ -30,3 +30,10 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_filter    = [ 'item_name', 'menu_item'] 
     search_fields  = ['item_name']
     list_editable  = ['quantity']
+    
+@admin.register(Location)    
+class LocationAdmin(admin.ModelAdmin):
+    list_display  = ['branch_name', 'address', 'city', 'phone', 'opening_time', 'closing_time', 'is_active']
+    list_filter   = ['branch_name', 'address', 'city']
+    search_fields = ['branch_name']
+    list_editable = ['opening_time', 'closing_time', 'is_active']
