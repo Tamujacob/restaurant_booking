@@ -285,107 +285,21 @@
   <h2 class="section-title">Our <em>Locations</em></h2>
   <p class="section-sub">We're in 12 locations — 8 in Kampala, 1 in Entebbe, and 3 in Nairobi. Find your nearest Café Javas.</p>
   <div class="locations-grid">
- 
 
+    <div class="locations-grid">
+  {% for location in locations %}
     <div class="location-card">
       <div class="loc-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
         </svg>
       </div>
-      <div class="loc-name">Kira Road</div>
-      <div class="loc-addr">Kira Road, Kampala</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
+      <div class="loc-name">{{ location.branch_name }}</div>
+      <div class="loc-addr">{{ location.address }}</div>
+      <div class="loc-hours">Open: {{ location.opening_time }} – {{ location.closing_time }}</div>
     </div>
-
-    <div class="location-card">
-      <div class="loc-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-        </svg>
-      </div>
-      <div class="loc-name">Kampala Boulevard</div>
-      <div class="loc-addr">Kampala Boulevard, Kampala</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
-    </div>
-
-    <div class="location-card">
-      <div class="loc-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-        </svg>
-      </div>
-      <div class="loc-name">Oasis Mall</div>
-      <div class="loc-addr">Access Rd, Oasis Mall, Kampala</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
-    </div>
-
-    <div class="location-card">
-      <div class="loc-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-        </svg>
-      </div>
-      <div class="loc-name">Nakawa</div>
-      <div class="loc-addr">Nakawa, Kampala</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
-    </div>
-
-    <div class="location-card">
-      <div class="loc-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-        </svg>
-      </div>
-      <div class="loc-name">Namirembe</div>
-      <div class="loc-addr">Namirembe Road, Kampala</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
-    </div>
-
-    <div class="location-card">
-      <div class="loc-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-        </svg>
-      </div>
-      <div class="loc-name">Lugogo</div>
-      <div class="loc-addr">Lugogo Bypass, Kampala</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
-    </div>
-
-    <div class="location-card">
-      <div class="loc-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-        </svg>
-      </div>
-      <div class="loc-name">Bombo Road</div>
-      <div class="loc-addr">Bombo Road, Kampala</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
-    </div>
-
-    <div class="location-card">
-      <div class="loc-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-        </svg>
-      </div>
-      <div class="loc-name">Victoria Mall, Entebbe</div>
-      <div class="loc-addr">Victoria Mall, Entebbe</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
-    </div>
-
-    <div class="location-card">
-      <div class="loc-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-        </svg>
-      </div>
-      <div class="loc-name">Parliamentary Avenue</div>
-      <div class="loc-addr">Parliamentary Avenue, Kampala</div>
-      <div class="loc-hours">Open: 6:30 AM – 11:00 PM</div>
-    </div>
-  </div>
+  {% endfor %}
+</div>
 </section>
 
 <!--  FOOTER  -->
