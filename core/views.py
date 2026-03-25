@@ -21,10 +21,12 @@ def home(request):
             messages.error(request, "Something went wrong. Please check your details and try again.")
 
     menu_items = MenuItem.objects.filter(is_available=True)
+    locations = Location.objects.filter(is_active = True)
     return render(request, 'index.html', {
     'form': form,
     'order_form': order_form,    
     'menu_items': menu_items,
+    'locations':locations
 })
 
 def admin_login(request):
@@ -63,3 +65,5 @@ def place_order(request):
             return JsonResponse({'status': 'error', 'message': 'Please fill in all required fields correctly.'})
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
+    
