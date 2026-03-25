@@ -795,6 +795,7 @@ section { padding: 90px 60px; }
   background: var(--white);
   width: 100%;
   box-sizing: border-box;
+  padding: 90px 60px;    /* ← make sure this matches your section padding */
 }
 
 .locations-grid {
