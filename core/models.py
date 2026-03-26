@@ -102,17 +102,17 @@ class Order(models.Model):
 
 
     #  CUSTOMER DETAILS 
-    first_name    = models.CharField(max_length=100)
-    last_name     = models.CharField(max_length=100)
-    email         = models.EmailField()
-    phone         = models.CharField(max_length=20, blank=True)
+    first_name        = models.CharField(max_length=100)
+    last_name         = models.CharField(max_length=100)
+    email             = models.EmailField()
+    phone             = models.CharField(max_length=20, blank=True)
     delivery_location = models.CharField(max_length=100)
-    date          = models.DateField()
-    total_price   = models.IntegerField()
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    delivery_time = models.TimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    date              = models.DateField()
+    total_price       = models.IntegerField()
+    status            = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    delivery_time     = models.TimeField()
+    created_at        = models.DateTimeField(auto_now_add=True)
+    updated_at        = models.DateTimeField(auto_now=True)
     
     class Meta:
         ordering = ['-created_at']
@@ -158,3 +158,33 @@ class Location(models.Model):
     
     def __str__(self):
         return self.branch_name
+
+class customerFeedback(models.Model):
+
+    LOCATION_CHOICES = [
+        ('kira_road', 'Kira Road'),
+        ('kampala_boulevard', 'Kampala Boulevard'),
+        ('oasis_mall', 'Oasis Mall'),
+        ('nakawa', 'Nakawa'),
+        ('namirembe', 'Namirembe'),
+        ('lugogo', 'Lugogo'),
+        ('bombo_road', 'Bombo Road'),
+        ('parliamentary_avenue', 'Parliamentary Avenue'),
+        ('victoria_mall_entebbe', 'Victoria Mall, Entebbe'),
+    ]
+
+    RATING_CHOICES = [
+        (1, '1 - Very Poor'),
+        (2, '2 - Poor'),
+        (3, '3 - Average'),
+        (4, '4 - Good'),
+        (5, '5 - Excellent'),
+    ]
+
+    first_name    = models.CharField(max_length=100)
+    last_name     = models.CharField(max_length=100)
+    email         = models.EmailField()
+    phone         = models.CharField(max_length=50, blank=True)
+    date          = models.DateField()
+    branch_name   = models.CharField(max_length=50, choices=LOCATION_CHOICES)
+    message       = models.TextField()
