@@ -159,7 +159,7 @@ class Location(models.Model):
     def __str__(self):
         return self.branch_name
 
-class customerFeedback(models.Model):
+class CustomerFeedback(models.Model):
 
     LOCATION_CHOICES = [
         ('kira_road', 'Kira Road'),
@@ -185,6 +185,17 @@ class customerFeedback(models.Model):
     last_name     = models.CharField(max_length=100)
     email         = models.EmailField()
     phone         = models.CharField(max_length=50, blank=True)
-    date          = models.DateField()
+    created_at    = models.DateTimeField(auto_now_add=True)
     branch_name   = models.CharField(max_length=50, choices=LOCATION_CHOICES)
+    rating        = models.IntegerField(choices=RATING_CHOICES)
     message       = models.TextField()
+
+    class Meta:
+        ordering = ['-created_at']       # newest bookings first
+        verbose_name = 'customerFeedback'
+        verbose_name_plural = 'customerFeedbacks'
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} — {self.branch_name} — {self.rating}"  
+
+    
