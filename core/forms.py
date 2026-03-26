@@ -115,3 +115,55 @@ class OrderForm(forms.ModelForm):
             }),
             
         } 
+
+class CustomerFeedbackForm(forms.ModelForm):
+
+    class Meta:
+        model = CustomerFeedback
+        fields = [
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'branch_name',
+            'rating',
+            'message'
+        ]   
+
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'Your first name',
+                'id': 'bookFirst',
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'Your last name',
+                'id': 'bookLast',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-input',
+                'placeholder': 'you@email.com',
+                'id': 'bookEmail',
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-input',
+                'placeholder': '+256 700 000 000',
+                'id': 'bookPhone',
+            }),
+            'branch_name': forms.Select(attrs={
+                'class': 'form-select',
+                'id': 'branch',
+            }),
+
+            'rating': forms.RadioSelect(attrs={
+                'class': 'star-rating',
+            }),
+              'message': forms.Textarea(attrs={
+                'class': 'form-textarea',
+                'placeholder': 'Write your message here.',
+                'id': 'bookNote',
+                'rows': 3,
+            }),
+
+        }     
