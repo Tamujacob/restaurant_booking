@@ -1,5 +1,5 @@
 from django import forms
-from .models import TableBooking, Order
+from .models import TableBooking, Order, CustomerFeedback
 
 class TableBookingForm(forms.ModelForm):
 
