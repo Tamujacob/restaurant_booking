@@ -37,3 +37,11 @@ class LocationAdmin(admin.ModelAdmin):
     list_filter   = ['branch_name', 'address', 'city']
     search_fields = ['branch_name']
     list_editable = ['opening_time', 'closing_time', 'is_active']
+
+
+@admin.register(CustomerFeedback)
+class CustomerFeedbackAdmin(admin.ModelAdmin):
+    list_display  = ['fist_name', 'last_name', 'email', 'phone', 'branch_name', 'rating' ]
+    list_filter   = ['branch_name', 'first_name']
+    search_fields = ['branch_name']
+   
