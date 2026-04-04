@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import TableBookingForm, OrderForm
-from .models import MenuItem, Order, OrderItem, Location
+from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm
+from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback
 from django.http import JsonResponse
 import json
 
@@ -9,6 +9,7 @@ import json
 def home(request):
     form = TableBookingForm()
     order_form = OrderForm()
+    feedback_form = CustomerFeedbackForm()
 
 
     if request.method == 'POST':
@@ -26,7 +27,8 @@ def home(request):
     'form': form,
     'order_form': order_form,    
     'menu_items': menu_items,
-    'locations':locations
+    'locations':locations,
+    'feedback_form': feedback_form
 })
 
 def admin_login(request):
@@ -65,5 +67,19 @@ def place_order(request):
             return JsonResponse({'status': 'error', 'message': 'Please fill in all required fields correctly.'})
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
+def submit_feedback(request):
+    if request.method == 'POST':
+        form = CustomerFeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save() 
+            messages.success(request, f"Thank you {feedback.first_name}! Your feedback has been received.")
+            return redirect('home')  
+
+        else:
+                messages.error(request, "Something went wrong. Please try again.")
+        return redirect('home')     
+        
+           
 
     
