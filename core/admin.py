@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import TableBooking, MenuItem, Order, OrderItem, Location
+from .models import TableBooking, MenuItem, Order, OrderItem, Location, CustomerFeedback
 
 @admin.register(TableBooking)
 class TableBookingAdmin(admin.ModelAdmin):
@@ -41,7 +41,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 @admin.register(CustomerFeedback)
 class CustomerFeedbackAdmin(admin.ModelAdmin):
-    list_display  = ['fist_name', 'last_name', 'email', 'phone', 'branch_name', 'rating' ]
-    list_filter   = ['branch_name', 'first_name']
+    list_display  = ['first_name', 'last_name', 'email', 'phone', 'branch_name', 'rating' ]
+    list_filter   = ['branch_name', 'rating']
     search_fields = ['branch_name']
    
