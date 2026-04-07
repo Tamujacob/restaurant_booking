@@ -38,18 +38,14 @@ def place_order(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
-            # Step 3 — save order without committing to database yet
             order = form.save(commit=False)
-            
-            # Step 4 — get cart items sent from JavaScript
+           
             cart_data = json.loads(request.POST.get('cart_items', '[]'))
             
-            # Step 5 — calculate total price and save order
             total = sum(item['price'] * item['qty'] for item in cart_data)
             order.total_price = total
             order.save()
-            
-            # Step 6 — save each cart item as an OrderItem
+           
             for item in cart_data:
                 menu_item = MenuItem.objects.get(id=item['id'])
                 OrderItem.objects.create(
