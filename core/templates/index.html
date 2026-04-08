@@ -303,6 +303,31 @@
 </div>
 </section>
 
+<--Customer Feedback -->
+<section id="feedback" class="section-padding">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="label">Your Thoughts</span>
+            <h2 class="title">Rate Your Experience</h2>
+            <p class="subtitle">We value your feedback to help us improve our services.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="POST" action="{% url 'submit_feedback' %}" class="feedback-form">
+                    {% csrf_token %}
+                    
+                    {{ feedback_form.as_p }}
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!--  FOOTER  -->
 <footer>
   <div class="footer-top">
