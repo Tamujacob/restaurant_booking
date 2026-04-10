@@ -302,18 +302,41 @@
   {% endfor %}
 </div>
 </section>
-
-<!-- Customer Feedback -->
+<!-- ─── CUSTOMER FEEDBACK ─────────────────────────── -->
 <section id="feedback">
   <div class="book-inner">
+
+    <!-- LEFT SIDE — image and text -->
     <div class="book-left">
       <div class="section-label" style="color:var(--caramel)">Your Thoughts</div>
       <h2 class="section-title" style="color:var(--cream)">Rate Your <em>Experience</em></h2>
-      <p class="section-sub">We value your feedback — good or bad. Help us serve you better.</p>
+      <p class="section-sub" style="color:var(--latte)">We value your feedback — good or bad. Help us serve you better and make every visit unforgettable.</p>
+
+      <ul class="book-perks">
+        <li><span class="perk-icon">⭐</span> Rate your dining experience</li>
+        <li><span class="perk-icon">🍽️</span> Tell us about your favourite dish</li>
+        <li><span class="perk-icon">💬</span> Your feedback shapes our service</li>
+        <li><span class="perk-icon">📧</span> We respond to every review</li>
+      </ul>
+
+      <div class="feedback-img">
+        <img src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=600&q=80" alt="Café Javas dining experience" />
+      </div>
     </div>
 
+    <!-- RIGHT SIDE — feedback form -->
     <div class="booking-form">
       <div class="form-title">Share Your Feedback</div>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="booking-message booking-message--{{ message.tags }}">
+            {% if message.tags == 'success' %}✅{% else %}⚠️{% endif %}
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
       <form method="POST" action="{% url 'submit_feedback' %}">
         {% csrf_token %}
 
@@ -329,12 +352,12 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">Email</label>
+          <label class="form-label">Email Address</label>
           {{ feedback_form.email }}
         </div>
 
         <div class="form-group">
-          <label class="form-label">Phone</label>
+          <label class="form-label">Phone Number</label>
           {{ feedback_form.phone }}
         </div>
 
@@ -344,12 +367,12 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">Rating</label>
+          <label class="form-label">Your Rating</label>
           {{ feedback_form.rating }}
         </div>
 
         <div class="form-group">
-          <label class="form-label">Message</label>
+          <label class="form-label">Your Message</label>
           {{ feedback_form.message }}
         </div>
 
@@ -357,6 +380,7 @@
 
       </form>
     </div>
+
   </div>
 </section>
 
