@@ -795,7 +795,7 @@ section { padding: 90px 60px; }
   background: var(--white);
   width: 100%;
   box-sizing: border-box;
-  padding: 90px 60px;    /* ← make sure this matches your section padding */
+  padding: 90px 60px;    
 }
 
 .locations-grid {
@@ -915,6 +915,61 @@ section { padding: 90px 60px; }
   border-radius: 50px; font-weight: 700;
   font-size: 0.82rem; letter-spacing: 1.5px;
   text-transform: uppercase; cursor: pointer;
+}
+
+/* ─── FEEDBACK SECTION ──*/
+#feedback {
+  background: var(--coffee);
+  position: relative;
+  overflow: hidden;
+}
+
+#feedback .section-title { color: var(--cream); }
+#feedback .section-sub { color: var(--latte); }
+
+.feedback-img {
+  margin-top: 30px;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 280px;
+}
+
+.feedback-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* ─── STAR RATING ──*/
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 4px;
+  list-style: none;
+  padding: 0;
+}
+
+.star-rating li {
+  display: inline;
+}
+
+.star-rating input[type="radio"] {
+  display: none;
+}
+
+.star-rating label {
+  font-size: 2.5rem;
+  color: var(--latte);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star-rating input[type="radio"]:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: var(--caramel);
 }
 
 
