@@ -4,15 +4,14 @@ Django settings for cafejavas project.
 
 from pathlib import Path
 from decouple import config
-import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-6gn*$&w@npae8fdd2yc)w$0!&xe)n+z(@w91l%jbp!7!-o^0o(')
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost').split(',')
+DEBUG = config('DEBUG', default=True, cast=bool)
+ALLOWED_HOSTS = ['*']  # fine for a demo; we'll tighten this later when it's closer to done
 
 
 # Application definition
@@ -29,7 +28,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # added for static files in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,11 +58,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'cafejavas.wsgi.application'
 
 
-# Database
+# Database — SQLite is fine for a progress demo
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
