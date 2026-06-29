@@ -1,6 +1,6 @@
 # ☕ Café Javas Website Clone
 
-> A clone of the [Café Javas Uganda](https://cafejavas.co.ug) restaurant website — rebuilt from scratch using HTML, CSS, JavaScript, and Django as the backend.
+> A clone of the [Café Javas Uganda](https://cafejavas.co.ug) restaurant website — rebuilt from scratch using HTML, CSS, JavaScript, and Django as the backeend. Here is the link to access the clone (https://cafe-javas-clone-restaurant.onrender.com)
 
 ---
 
