@@ -2,6 +2,14 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+
+    # template routes
+    path('', views.home, name='home'),
+    path('login/', views.admin_login, name='login'),
+    path('order/', views.place_order, name='place_order'),
+    path('feedback/', views.submit_feedback, name='submit_feedback'),
+
+    # API routes
     path('api/menu/', views.api_menu, name='api_menu'),
     path('api/locations/', views.api_locations, name='api_locations'),
     path('api/bookings/', views.api_bookings, name='api_bookings'),
