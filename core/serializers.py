@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback
+from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback, TableBooking
+
 
 
 class MenuItemSerializer(serializers.ModelSerializer):
@@ -30,3 +31,8 @@ class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerFeedback
         fields = '__all__'
+
+class TableBookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TableBooking
+        fields = '__all__'        
