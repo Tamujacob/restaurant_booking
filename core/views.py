@@ -4,6 +4,14 @@ from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm
 from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback
 from django.http import JsonResponse
 import json
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import (
+    MenuItemSerializer, LocationSerializer,
+    OrderSerializer, FeedbackSerializer, TableBookingSerializer,
+)
+
 
 
 def home(request):
@@ -78,4 +86,53 @@ def submit_feedback(request):
         
            
 
-    
+    # --- API VIEWS ---
+
+@api_view(['GET'])
+def api_menu(request):
+    items = MenuItem.objects.filter(is_available=True)
+    serializer = MenuItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def api_locations(request):
+    locations = Location.objects.filter(is_active=True)
+    serializer = LocationSerializer(locations, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def api_bookings(request):
+    serializer = TableBookingSerializer(data=request.data)
+    if serializer.is_valid():
+        booking = serializer.save()
+        return Response(
+            {'message': f"Table booked for {booking.first_name}!"},
+            status=status.HTTP_201_CREATED
+        )
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def api_orders(request):
+    serializer = OrderSerializer(data=request.data)
+    if serializer.is_valid():
+        order = serializer.save()
+        return Response(
+            {'message': f"Order placed for {order.first_name}!"},
+            status=status.HTTP_201_CREATED
+        )
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def api_feedback(request):
+    serializer = FeedbackSerializer(data=request.data)
+    if serializer.is_valid():
+        feedback = serializer.save()
+        return Response(
+            {'message': f"Feedback received from {feedback.first_name}!"},
+            status=status.HTTP_201_CREATED
+        )
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
