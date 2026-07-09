@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Café Javas Admin Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: #1A0A00;
+      color: #F5EDD9;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .header {
+      background: #111;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #C97B3A;
+    }
+    .header h1 { color: #C97B3A; font-size: 1.5rem; }
+    .header a {
+      color: #F5EDD9;
+      text-decoration: none;
+      background: #C97B3A;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    /* STATS BAR */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 30px 40px;
+    }
+    .stat-card {
+      background: #2a1500;
+      border: 1px solid #C97B3A;
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-card .number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #C97B3A;
+    }
+    .stat-card .label {
+      font-size: 0.95rem;
+      color: #F5EDD9;
+      margin-top: 6px;
+      opacity: 0.8;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 10px 40px 40px;
+    }
+    .section h2 {
+      color: #C97B3A;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #C97B3A44;
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #2a1500;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th {
+      background: #C97B3A;
+      color: #1A0A00;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #ffffff11;
+      font-size: 0.9rem;
+      color: #F5EDD9;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #3a2000; }
+
+    /* STATUS BADGES */
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: bold;
+    }
+    .badge-pending  { background: #f59e0b22; color: #f59e0b; }
+    .badge-confirmed { background: #10b98122; color: #10b981; }
+    .badge-cancelled { background: #ef444422; color: #ef4444; }
+    .badge-completed { background: #6366f122; color: #6366f1; }
+
+    .empty { color: #ffffff44; font-style: italic; padding: 20px 0; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>☕ Café Javas — Admin Dashboard</h1>
+    <a href="/">← Back to Site</a>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="number">{{ total_bookings }}</div>
+      <div class="label">Total Bookings</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">{{ total_orders }}</div>
+      <div class="label">Total Orders</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">{{ total_feedback }}</div>
+      <div class="label">Customer Feedback</div>
+    </div>
+  </div>
+
+  <!-- BOOKINGS -->
+  <div class="section">
+    <h2>📅 Table Bookings</h2>
+    {% if bookings %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Location</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Guests</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in bookings %}
+        <tr>
+          <td>{{ b.full_name }}</td>
+          <td>{{ b.email }}</td>
+          <td>{{ b.get_location_display }}</td>
+          <td>{{ b.date }}</td>
+          <td>{{ b.time }}</td>
+          <td>{{ b.guests }}</td>
+          <td><span class="badge badge-{{ b.status }}">{{ b.status }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No bookings yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- ORDERS -->
+  <div class="section">
+    <h2>🛒 Orders</h2>
+    {% if orders %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Delivery Location</th>
+          <th>Total</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in orders %}
+        <tr>
+          <td>{{ o.first_name }} {{ o.last_name }}</td>
+          <td>{{ o.phone }}</td>
+          <td>{{ o.delivery_location }}</td>
+          <td>UGX {{ o.total_price|floatformat:0 }}</td>
+          <td>{{ o.created_at|date:"M d, Y" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No orders yet.</p>
+    {% endif %}
+  </div>
+
+  <!-- FEEDBACK -->
+  <div class="section">
+    <h2>💬 Customer Feedback</h2>
+    {% if feedbacks %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Message</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in feedbacks %}
+        <tr>
+          <td>{{ f.first_name }} {{ f.last_name }}</td>
+          <td>{{ f.email }}</td>
+          <td>{{ f.message }}</td>
+          <td>{{ f.created_at|date:"M d, Y" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No feedback yet.</p>
+    {% endif %}
+  </div>
+
+</body>
+</html>
