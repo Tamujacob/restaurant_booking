@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm
-from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback
+from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback, TableBooking
 from django.http import JsonResponse
 import json
 from rest_framework.decorators import api_view
