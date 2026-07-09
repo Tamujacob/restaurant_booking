@@ -76,13 +76,13 @@ def submit_feedback(request):
     if request.method == 'POST':
         form = CustomerFeedbackForm(request.POST)
         if form.is_valid():
-            feedback = form.save() 
+            feedback = form.save()
             messages.success(request, f"Thank you {feedback.first_name}! Your feedback has been received.")
-            return redirect('home')  
-
         else:
-                messages.error(request, "Something went wrong. Please try again.")
-        return redirect('home')     
+            messages.error(request, "Something went wrong. Please try again.")
+        return redirect('home')
+
+    return redirect('home')   
         
            
 
