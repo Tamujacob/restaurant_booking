@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm
-from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback
+from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback, TableBooking
 from django.http import JsonResponse
 import json
 from rest_framework.decorators import api_view
@@ -11,7 +11,7 @@ from .serializers import (
     MenuItemSerializer, LocationSerializer,
     OrderSerializer, FeedbackSerializer, TableBookingSerializer,
 )
-
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def home(request):
@@ -76,13 +76,13 @@ def submit_feedback(request):
     if request.method == 'POST':
         form = CustomerFeedbackForm(request.POST)
         if form.is_valid():
-            feedback = form.save() 
+            feedback = form.save()
             messages.success(request, f"Thank you {feedback.first_name}! Your feedback has been received.")
-            return redirect('home')  
-
         else:
-                messages.error(request, "Something went wrong. Please try again.")
-        return redirect('home')     
+            messages.error(request, "Something went wrong. Please try again.")
+        return redirect('home')
+
+    return redirect('home')   
         
            
 
@@ -136,3 +136,19 @@ def api_feedback(request):
             status=status.HTTP_201_CREATED
         )
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@staff_member_required
+def dashboard(request):
+    bookings = TableBooking.objects.all().order_by('-created_at')
+    orders = Order.objects.all().order_by('-created_at')
+    feedbacks = CustomerFeedback.objects.all().order_by('-created_at')
+
+    context = {
+        'total_bookings': bookings.count(),
+        'total_orders': orders.count(),
+        'total_feedback': feedbacks.count(),
+        'bookings': bookings,
+        'orders': orders,
+        'feedbacks': feedbacks,
+    }
+    return render(request, 'dashboard.html', context)

@@ -8,6 +8,7 @@ urlpatterns = [
     path('login/', views.admin_login, name='login'),
     path('order/', views.place_order, name='place_order'),
     path('feedback/', views.submit_feedback, name='submit_feedback'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 
     # API routes
     path('api/menu/', views.api_menu, name='api_menu'),
