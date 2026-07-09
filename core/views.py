@@ -11,7 +11,7 @@ from .serializers import (
     MenuItemSerializer, LocationSerializer,
     OrderSerializer, FeedbackSerializer, TableBookingSerializer,
 )
-
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def home(request):
@@ -136,3 +136,19 @@ def api_feedback(request):
             status=status.HTTP_201_CREATED
         )
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@staff_member_required
+def dashboard(request):
+    bookings = TableBooking.objects.all().order_by('-created_at')
+    orders = Order.objects.all().order_by('-created_at')
+    feedbacks = CustomerFeedback.objects.all().order_by('-created_at')
+
+    context = {
+        'total_bookings': bookings.count(),
+        'total_orders': orders.count(),
+        'total_feedback': feedbacks.count(),
+        'bookings': bookings,
+        'orders': orders,
+        'feedbacks': feedbacks,
+    }
+    return render(request, 'dashboard.html', context)
