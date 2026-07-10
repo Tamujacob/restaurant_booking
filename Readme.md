@@ -207,13 +207,6 @@ Every push to `main` on GitHub triggers an automatic redeploy on Render.
 
 ---
 
-## 👨‍💻 Author
-
-**Arjenz Jacob**
-Final-year BSc Information Technology student — Bugema University
-Registration: `24/BIT/BU/R/0010`
-Supervisor: Madam Nantege Hellen
-
 ---
 
 ## 📌 Status
