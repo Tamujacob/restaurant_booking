@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm
+from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm, CustomerSignupForm 
 from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback, TableBooking
 from django.http import JsonResponse
 import json
@@ -12,6 +12,8 @@ from .serializers import (
     OrderSerializer, FeedbackSerializer, TableBookingSerializer,
 )
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -152,3 +154,73 @@ def dashboard(request):
         'feedbacks': feedbacks,
     }
     return render(request, 'dashboard.html', context)
+
+# ── Customer Signup ──────────────────────────────────────────
+def customer_signup(request):
+    form = CustomerSignupForm()
+ 
+    if request.method == 'POST':
+        form = CustomerSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, f"Welcome, {user.first_name}! Your account has been created.")
+            return redirect('home')
+        else:
+            messages.error(request, "Please fix the errors below and try again.")
+ 
+    return render(request, 'customer_signup.html', {'form': form})
+ 
+ 
+# ── Customer Login ───────────────────────────────────────────
+def customer_login(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+ 
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+ 
+        if user is not None:
+            if user.is_staff:
+                # staff trying to log in via customer page — redirect them
+                messages.error(request, "Staff members should use the staff portal.")
+                return redirect('customer_login')
+            login(request, user)
+            messages.success(request, f"Welcome back, {user.first_name}!")
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid username or password. Please try again.")
+ 
+    return render(request, 'customer_login.html')
+ 
+ 
+# ── Customer Logout ──────────────────────────────────────────
+def customer_logout(request):
+    logout(request)
+    messages.success(request, "You have been signed out.")
+    return redirect('home')
+ 
+ 
+# ── Staff Login ──────────────────────────────────────────────
+def staff_login(request):
+    if request.user.is_authenticated and request.user.is_staff:
+        return redirect('dashboard')
+ 
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+ 
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect('dashboard')
+        elif user is not None and not user.is_staff:
+            # valid user but not staff
+            messages.error(request, "You do not have staff access.")
+        else:
+            messages.error(request, "Invalid credentials. Please try again.")
+ 
+    return render(request, 'staff_login.html')
+ 
