@@ -1,5 +1,7 @@
 from django import forms
 from .models import TableBooking, Order, CustomerFeedback
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class TableBookingForm(forms.ModelForm):
 
@@ -166,4 +168,19 @@ class CustomerFeedbackForm(forms.ModelForm):
                 'rows': 3,
             }),
 
-        }     
+        }   
+
+class CustomerSignupForm(UserCreationForm):
+    first_name = forms.CharField(max_length=100, required=True)
+    last_name  = forms.CharField(max_length=100, required=True)
+    email      = forms.EmailField(required=True)
+ 
+    class Meta:
+        model  = User
+        fields = ['first_name', 
+                  'last_name', 
+                  'username',
+                  'email', 
+                  'password1', 
+                  'password2'
+                  ]          
