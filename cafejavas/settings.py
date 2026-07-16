@@ -94,3 +94,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Auth redirects
+LOGIN_URL = '/staff-portal/'       # where @staff_member_required redirects non-logged-in users
+LOGIN_REDIRECT_URL = '/'           # where to go after login if no 'next' param
