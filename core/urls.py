@@ -10,6 +10,13 @@ urlpatterns = [
     path('feedback/', views.submit_feedback, name='submit_feedback'),
     path('dashboard/', views.dashboard, name='dashboard'),
 
+      # ── Auth routes ───────────────────────────────────────────
+    path('signup/', views.customer_signup, name='customer_signup'),
+    path('login/', views.customer_login, name='customer_login'),
+    path('logout/', views.customer_logout, name='customer_logout'),
+     path('staff-portal/', views.staff_login, name='staff_login'),
+
+
     # API routes
     path('api/menu/', views.api_menu, name='api_menu'),
     path('api/locations/', views.api_locations, name='api_locations'),
