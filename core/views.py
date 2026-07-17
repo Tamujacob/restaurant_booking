@@ -15,6 +15,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, get_object_or_404
 
 
 def home(request):
@@ -244,4 +245,14 @@ def dashboard(request):
         'users':          users,
     }
     return render(request, 'dashboard.html', context)
+
+@staff_member_required
+def toggle_user(request, user_id):
+    if request.method == 'POST':
+        user = get_object_or_404(User, id=user_id, is_staff=False)
+        user.is_active = not user.is_active
+        user.save()
+        status = "activated" if user.is_active else "deactivated"
+        messages.success(request, f"{user.username} has been {status}.")
+    return redirect('dashboard')
  
