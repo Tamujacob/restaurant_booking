@@ -14,6 +14,7 @@ from .serializers import (
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def home(request):
@@ -223,4 +224,24 @@ def staff_login(request):
             messages.error(request, "Invalid credentials. Please try again.")
  
     return render(request, 'staff_login.html')
+
+
+@staff_member_required
+def dashboard(request):
+    bookings  = TableBooking.objects.all().order_by('-created_at')
+    orders    = Order.objects.all().order_by('-created_at')
+    feedbacks = CustomerFeedback.objects.all().order_by('-created_at')
+    users     = User.objects.filter(is_staff=False).order_by('-date_joined')  # customers only
+
+    context = {
+        'total_bookings': bookings.count(),
+        'total_orders':   orders.count(),
+        'total_feedback': feedbacks.count(),
+        'total_users':    users.count(),
+        'bookings':       bookings,
+        'orders':         orders,
+        'feedbacks':      feedbacks,
+        'users':          users,
+    }
+    return render(request, 'dashboard.html', context)
  
