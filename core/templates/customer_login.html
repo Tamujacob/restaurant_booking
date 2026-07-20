@@ -223,8 +223,9 @@
       </div>
       {% endif %}
 
-      <form method="POST" action="{% url 'customer_login' %}">
+      <form method="POST" action="{% url 'customer_login' %}{% if next %}?next={{ next|urlencode }}{% endif %}">
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next|default:'' }}">
 
         <div class="form-group">
           <label>Username</label>

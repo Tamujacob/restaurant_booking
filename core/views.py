@@ -178,12 +178,14 @@ def customer_signup(request):
 def customer_login(request):
     if request.user.is_authenticated:
         return redirect('home')
- 
+
+    next_url = request.GET.get('next') or request.POST.get('next') or 'home'
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
- 
+
         if user is not None:
             if user.is_staff:
                 # staff trying to log in via customer page — redirect them
@@ -191,12 +193,11 @@ def customer_login(request):
                 return redirect('customer_login')
             login(request, user)
             messages.success(request, f"Welcome back, {user.first_name}!")
-            return redirect('home')
+            return redirect(next_url)
         else:
             messages.error(request, "Invalid username or password. Please try again.")
- 
-    return render(request, 'customer_login.html')
- 
+
+    return render(request, 'customer_login.html', {'next': next_url})
  
 # ── Customer Logout ──────────────────────────────────────────
 def customer_logout(request):
