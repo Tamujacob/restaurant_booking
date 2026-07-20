@@ -91,7 +91,7 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.name
          
-class Order(models.Model): 
+class Order(models.Model):
 
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -101,20 +101,29 @@ class Order(models.Model):
         ('cancelled', 'Cancelled'),
     ]
 
+    SOURCE_CHOICES = [
+        ('online', 'Online'),
+        ('physical', 'Physical / Walk-in'),
+    ]
 
     #  CUSTOMER DETAILS 
     first_name        = models.CharField(max_length=100)
     last_name         = models.CharField(max_length=100)
-    email             = models.EmailField()
+    email             = models.EmailField(blank=True)
     phone             = models.CharField(max_length=20, blank=True)
-    delivery_location = models.CharField(max_length=100)
+    delivery_location = models.CharField(max_length=100, blank=True)
     date              = models.DateField()
     total_price       = models.IntegerField()
     status            = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    delivery_time     = models.TimeField()
+    delivery_time     = models.TimeField(null=True, blank=True)
     created_at        = models.DateTimeField(auto_now_add=True)
     updated_at        = models.DateTimeField(auto_now=True)
-    
+
+    #  NEW: source & staff handling 
+    source            = models.CharField(max_length=20, choices=SOURCE_CHOICES, default='online')
+    table_number      = models.CharField(max_length=20, blank=True)
+    handled_by        = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders_handled')
+
     class Meta:
         ordering = ['-created_at']
         verbose_name = 'Order'
