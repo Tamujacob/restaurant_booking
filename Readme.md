@@ -16,7 +16,7 @@ It is built for **learning and portfolio purposes** using vanilla HTML, CSS, and
 
 ---
 
-## ✨ What the Clone Includes
+##  What the Clone Includes
 
 | Feature | Description |
 |---|---|
@@ -30,11 +30,11 @@ It is built for **learning and portfolio purposes** using vanilla HTML, CSS, and
 | 🔐 Admin Login | Custom branded admin login page matching the Café Javas identity |
 | 📊 Admin Dashboard | Protected dashboard showing bookings, orders, and feedback with stat cards |
 | 🔌 REST API | Five API endpoints built with Django REST Framework |
-| 📱 Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
+| 📱Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
 
 ---
 
-## 🔌 REST API Endpoints
+##  REST API Endpoints
 
 Built with **Django REST Framework**. All endpoints are accessible at the base URL of the live demo.
 
@@ -50,7 +50,7 @@ The browsable API (DRF's built-in UI) is available at each endpoint in the brows
 
 ---
 
-## 📊 Admin Dashboard
+##  Admin Dashboard
 
 A protected admin dashboard is available at `/dashboard/` — only accessible to staff/superuser accounts.
 
@@ -100,7 +100,7 @@ restaurant_booking/
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -114,7 +114,7 @@ restaurant_booking/
 
 ---
 
-## 🚀 Running Locally
+##  Running Locally
 
 **1. Clone the repo**
 ```bash
@@ -153,7 +153,7 @@ Visit `http://127.0.0.1:8000` for the site and `http://127.0.0.1:8000/dashboard/
 
 ---
 
-## 🌿 Branch Workflow
+##  Branch Workflow
 
 This project uses a two-branch Git workflow:
 
