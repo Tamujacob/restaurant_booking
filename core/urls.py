@@ -15,6 +15,8 @@ urlpatterns = [
     path('login/', views.customer_login, name='customer_login'),
     path('logout/', views.customer_logout, name='customer_logout'),
     path('staff-portal/', views.staff_login, name='staff_login'),
+    path('dashboard/create-staff/', views.create_staff, name='create_staff'),
+    path('physical-order/', views.physical_order, name='physical_order'),
 
     # API routes
     path('api/menu/', views.api_menu, name='api_menu'),
