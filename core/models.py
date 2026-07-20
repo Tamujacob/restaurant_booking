@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 # Create your models here.
 
 class TableBooking(models.Model):
@@ -197,5 +198,24 @@ class CustomerFeedback(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} — {self.branch_name} — {self.rating}"  
+
+
+class StaffProfile(models.Model):
+    ROLE_CHOICES = [
+        ('manager', 'Manager'),
+        ('receptionist_physical', 'Receptionist - Physical Orders'),
+        ('receptionist_online', 'Receptionist - Online Orders'),
+    ]
+
+    user       = models.OneToOneField(User, on_delete=models.CASCADE, related_name='staff_profile')
+    role       = models.CharField(max_length=30, choices=ROLE_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Staff Profile'
+        verbose_name_plural = 'Staff Profiles'
+
+    def __str__(self):
+        return f"{self.user.get_full_name() or self.user.username} — {self.get_role_display()}"    
 
     
