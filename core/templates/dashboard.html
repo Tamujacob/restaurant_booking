@@ -59,6 +59,7 @@
     .nav-badge.green  { background: rgba(16,185,129,.15); color: #10b981; }
     .nav-badge.purple { background: rgba(99,102,241,.15); color: #6366f1; }
     .nav-badge.teal   { background: rgba(20,184,166,.15); color: #14b8a6; }
+    .nav-badge.gold   { background: rgba(234,179,8,.15);  color: #eab308; }
     .sb-footer { padding: 8px; border-top: 1px solid var(--border); }
 
     /* MAIN */
@@ -188,6 +189,8 @@
     .badge-rating-good      { background: rgba(16,185,129,.15);  color: #10b981; }
     .badge-rating-avg       { background: rgba(245,158,11,.15);  color: #f59e0b; }
     .badge-rating-poor      { background: rgba(239,68,68,.15);   color: #ef4444; }
+    .badge-online           { background: rgba(99,102,241,.15);  color: #6366f1; }
+    .badge-physical         { background: rgba(234,179,8,.15);   color: #eab308; }
 
     /* ACTION BUTTONS */
     .btn-deactivate {
@@ -253,6 +256,22 @@
       Users
       <span class="nav-badge teal">{{ total_users }}</span>
     </a>
+
+    {% if request.user.is_superuser or request.user.staff_profile.role == 'manager' or request.user.staff_profile.role == 'receptionist_physical' %}
+    <div class="sb-section-label" style="margin-top:8px;">Staff tools</div>
+
+    <a href="{% url 'physical_order' %}" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>
+      New physical order
+    </a>
+    {% endif %}
+
+    {% if request.user.is_superuser %}
+    <a href="{% url 'create_staff' %}" class="nav-item" id="nav-staff">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      Create staff
+    </a>
+    {% endif %}
 
     <div class="sb-section-label" style="margin-top:8px;">Manage</div>
 
@@ -363,18 +382,26 @@
         <div class="quick-card" onclick="showSection('orders')">
           <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           <p>View orders</p>
-          <span>All delivery orders</span>
+          <span>All delivery & physical orders</span>
         </div>
         <div class="quick-card" onclick="window.location='/admin/core/menuitem/'">
           <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
           <p>Manage menu</p>
           <span>Add or edit items</span>
         </div>
+        {% if request.user.is_superuser %}
+        <div class="quick-card" onclick="window.location='{% url 'create_staff' %}'">
+          <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <p>Create staff</p>
+          <span>Managers & receptionists</span>
+        </div>
+        {% else %}
         <div class="quick-card" onclick="showSection('users')">
           <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           <p>Manage users</p>
           <span>Activate or deactivate</span>
         </div>
+        {% endif %}
       </div>
     </div>
 
@@ -433,17 +460,29 @@
       <table>
         <thead>
           <tr>
-            <th>Name</th><th>Phone</th><th>Delivery location</th>
-            <th>Delivery time</th><th>Total</th><th>Status</th><th>Date</th>
+            <th>Name</th><th>Source</th><th>Table / Delivery</th>
+            <th>Handled by</th><th>Total</th><th>Status</th><th>Date</th>
           </tr>
         </thead>
         <tbody>
           {% for o in orders %}
           <tr>
             <td><strong>{{ o.first_name }} {{ o.last_name }}</strong></td>
-            <td style="color:var(--muted);">{{ o.phone|default:"—" }}</td>
-            <td>{{ o.delivery_location }}</td>
-            <td style="color:var(--muted);">{{ o.delivery_time }}</td>
+            <td>
+              {% if o.source == 'physical' %}
+                <span class="badge badge-physical">Physical</span>
+              {% else %}
+                <span class="badge badge-online">Online</span>
+              {% endif %}
+            </td>
+            <td style="color:var(--muted);">
+              {% if o.source == 'physical' %}
+                Table {{ o.table_number|default:"—" }}
+              {% else %}
+                {{ o.delivery_location|default:"—" }}
+              {% endif %}
+            </td>
+            <td style="color:var(--muted);">{{ o.handled_by.username|default:"—" }}</td>
             <td style="color:#10b981;font-weight:700;">UGX {{ o.total_price|floatformat:0 }}</td>
             <td><span class="badge badge-{{ o.status }}">{{ o.get_status_display }}</span></td>
             <td style="color:var(--muted);">{{ o.created_at|date:"M d, Y" }}</td>
@@ -567,7 +606,7 @@
   const sections = ['bookings', 'orders', 'feedback', 'users'];
   const titles = {
     bookings: { h: 'Table bookings',       sub: 'All reservation records' },
-    orders:   { h: 'Orders',               sub: 'All delivery orders' },
+    orders:   { h: 'Orders',               sub: 'All delivery & physical orders' },
     feedback: { h: 'Customer feedback',    sub: 'What customers are saying' },
     users:    { h: 'Registered customers', sub: 'Manage customer accounts' },
   };
