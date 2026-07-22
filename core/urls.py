@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -24,4 +24,6 @@ urlpatterns = [
     path('api/bookings/', views.api_bookings, name='api_bookings'),
     path('api/orders/', views.api_orders, name='api_orders'),
     path('api/feedback/', views.api_feedback, name='api_feedback'),
+
+    path('accounts/', include('allauth.urls')),
 ]
