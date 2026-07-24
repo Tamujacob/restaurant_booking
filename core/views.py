@@ -16,6 +16,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
+from functools import wraps
+from django.core.exceptions import PermissionDenied
+from django.utils import timezone
+from .models import StaffProfile, MenuItem, Order, OrderItem
+from .forms import StaffCreationForm
+
 
 
 def home(request):
@@ -178,12 +184,14 @@ def customer_signup(request):
 def customer_login(request):
     if request.user.is_authenticated:
         return redirect('home')
- 
+
+    next_url = request.GET.get('next') or request.POST.get('next') or 'home'
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
- 
+
         if user is not None:
             if user.is_staff:
                 # staff trying to log in via customer page — redirect them
@@ -191,12 +199,11 @@ def customer_login(request):
                 return redirect('customer_login')
             login(request, user)
             messages.success(request, f"Welcome back, {user.first_name}!")
-            return redirect('home')
+            return redirect(next_url)
         else:
             messages.error(request, "Invalid username or password. Please try again.")
- 
-    return render(request, 'customer_login.html')
- 
+
+    return render(request, 'customer_login.html', {'next': next_url})
  
 # ── Customer Logout ──────────────────────────────────────────
 def customer_logout(request):
@@ -255,4 +262,88 @@ def toggle_user(request, user_id):
         status = "activated" if user.is_active else "deactivated"
         messages.success(request, f"{user.username} has been {status}.")
     return redirect('dashboard')
+
+def staff_role_required(*allowed_roles):
+    """Superusers and Managers get full access. Other roles must be in allowed_roles."""
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped(request, *args, **kwargs):
+            if not request.user.is_authenticated or not request.user.is_staff:
+                messages.error(request, "You must be logged in as staff to access this page.")
+                return redirect('staff_login')
+            if request.user.is_superuser:
+                return view_func(request, *args, **kwargs)
+            profile = getattr(request.user, 'staff_profile', None)
+            if profile and (profile.role == 'manager' or profile.role in allowed_roles):
+                return view_func(request, *args, **kwargs)
+            raise PermissionDenied
+        return _wrapped
+    return decorator
+
+
+@login_required
+def create_staff(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+
+    if request.method == 'POST':
+        form = StaffCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, f"Staff account created for {user.get_full_name() or user.username}.")
+            return redirect('create_staff')
+    else:
+        form = StaffCreationForm()
+
+    staff_list = StaffProfile.objects.select_related('user').all()
+    return render(request, 'create_staff.html', {'form': form, 'staff_list': staff_list})
+
+
+@staff_role_required('receptionist_physical')
+def physical_order(request):
+    menu_items = MenuItem.objects.filter(is_available=True)
+
+    if request.method == 'POST':
+        customer_name = request.POST.get('customer_name', '').strip()
+        table_number = request.POST.get('table_number', '').strip()
+
+        order_items = []
+        total_price = 0
+        for item in menu_items:
+            qty = request.POST.get(f'qty_{item.id}')
+            if qty and qty.isdigit() and int(qty) > 0:
+                qty = int(qty)
+                order_items.append((item, qty))
+                total_price += item.price * qty
+
+        if not order_items:
+            messages.error(request, "Select at least one item before submitting.")
+        else:
+            name_parts = customer_name.split(' ', 1) if customer_name else ['Walk-in', 'Customer']
+            first_name = name_parts[0]
+            last_name = name_parts[1] if len(name_parts) > 1 else ''
+
+            order = Order.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                date=timezone.now().date(),
+                delivery_time=timezone.now().time(),
+                total_price=total_price,
+                status='approved',
+                source='physical',
+                table_number=table_number,
+                handled_by=request.user,
+            )
+            for item, qty in order_items:
+                OrderItem.objects.create(
+                    order=order,
+                    menu_item=item,
+                    item_name=item.name,
+                    quantity=qty,
+                    unit_price=item.price,
+                )
+            messages.success(request, f"Order #{order.id} placed — table {table_number or 'walk-in'} — UGX {total_price}.")
+            return redirect('physical_order')
+
+    return render(request, 'physical_order.html', {'menu_items': menu_items})
  
