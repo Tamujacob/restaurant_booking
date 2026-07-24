@@ -46,7 +46,17 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {'access_type': 'online'},
     }
 }
+SOCIALACCOUNT_ADAPTER = 'core.adapters.CafeJavasSocialAccountAdapter'
+SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# Email verification (using allauth's account app)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # dev only — prints emails to terminal instead of sending
+ACCOUNT_EMAIL_VERIFICATION = 'optional'   # we enforce it manually in customer_login, not via allauth's own views
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/login/'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
+
 
 LOGIN_REDIRECT_URL = '/'
 
