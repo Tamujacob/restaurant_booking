@@ -1,21 +1,22 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
 
     # template routes
     path('', views.home, name='home'),
-    path('login/', views.admin_login, name='login'),
     path('order/', views.place_order, name='place_order'),
     path('feedback/', views.submit_feedback, name='submit_feedback'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('dashboard/toggle-user/<int:user_id>/', views.toggle_user, name='toggle_user'),
 
-      # ── Auth routes ───────────────────────────────────────────
+    #  Auth routes
     path('signup/', views.customer_signup, name='customer_signup'),
     path('login/', views.customer_login, name='customer_login'),
     path('logout/', views.customer_logout, name='customer_logout'),
-     path('staff-portal/', views.staff_login, name='staff_login'),
-
+    path('staff-portal/', views.staff_login, name='staff_login'),
+    path('dashboard/create-staff/', views.create_staff, name='create_staff'),
+    path('physical-order/', views.physical_order, name='physical_order'),
 
     # API routes
     path('api/menu/', views.api_menu, name='api_menu'),
@@ -23,4 +24,6 @@ urlpatterns = [
     path('api/bookings/', views.api_bookings, name='api_bookings'),
     path('api/orders/', views.api_orders, name='api_orders'),
     path('api/feedback/', views.api_feedback, name='api_feedback'),
+
+    path('accounts/', include('allauth.urls')),
 ]

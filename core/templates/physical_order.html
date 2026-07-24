@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Physical Order — Café Javas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+    body { background: #f7f4f0; padding: 32px; }
+    h1 { color: #1A0A00; margin-bottom: 20px; }
+    .msg { padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; }
+    .msg-success { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .msg-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .top-fields { display: flex; gap: 16px; margin-bottom: 24px; }
+    .top-fields input {
+      padding: 10px 12px; border: 1.5px solid #e5e5e5; border-radius: 8px; font-size: 14px;
+    }
+    table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; }
+    th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #eee; font-size: 14px; }
+    th { background: #1A0A00; color: #F5EDD9; }
+    input[type=number] { width: 70px; padding: 6px; border: 1.5px solid #e5e5e5; border-radius: 6px; }
+    .submit-btn {
+      margin-top: 20px; padding: 12px 28px; background: #C97B3A; color: #fff;
+      border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 15px;
+    }
+    .submit-btn:hover { background: #b56a2e; }
+  </style>
+</head>
+<body>
+
+  <h1>New Physical Order</h1>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="msg msg-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <div class="top-fields">
+      <input type="text" name="customer_name" placeholder="Customer name (optional)">
+      <input type="text" name="table_number" placeholder="Table number">
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Item</th><th>Price (UGX)</th><th>Qty</th></tr>
+      </thead>
+      <tbody>
+        {% for item in menu_items %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td><input type="number" name="qty_{{ item.id }}" min="0" value="0"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <button type="submit" class="submit-btn">Submit Order</button>
+  </form>
+
+</body>
+</html>

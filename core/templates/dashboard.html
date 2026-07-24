@@ -15,7 +15,6 @@
       --espresso-light: #2a1500;
       --espresso-mid: #3a2000;
       --caramel: #C97B3A;
-      --caramel-light: #E8A05A;
       --cream: #F5EDD9;
       --muted: #ffffff55;
       --border: #ffffff15;
@@ -41,93 +40,46 @@
       border-right: 1px solid var(--border);
       z-index: 100;
     }
-
-    .sb-logo {
-      padding: 24px 20px 20px;
-      border-bottom: 1px solid var(--border);
-    }
+    .sb-logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
     .sb-logo .brand { color: var(--caramel); font-family: 'Playfair Display', serif; font-size: 18px; }
     .sb-logo .sub { color: var(--muted); font-size: 11px; margin-top: 4px; letter-spacing: .05em; text-transform: uppercase; }
-
-    .sb-section-label {
-      padding: 16px 20px 6px;
-      font-size: 10px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
+    .sb-section-label { padding: 16px 20px 6px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
     .sb-nav { padding: 8px; flex: 1; overflow-y: auto; }
-
     .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: #ffffff88;
-      font-size: 13.5px;
-      text-decoration: none;
-      transition: background .12s, color .12s;
-      margin-bottom: 2px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 8px; cursor: pointer;
+      color: #ffffff88; font-size: 13.5px; text-decoration: none;
+      transition: background .12s, color .12s; margin-bottom: 2px;
     }
     .nav-item svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.8; flex-shrink: 0; }
     .nav-item:hover { background: #ffffff0f; color: var(--cream); }
     .nav-item.active { background: rgba(201,123,58,.18); color: var(--caramel); }
-
-    .nav-badge {
-      margin-left: auto;
-      font-size: 10px;
-      padding: 1px 7px;
-      border-radius: 20px;
-      font-weight: 700;
-    }
-    .nav-badge.orange { background: rgba(201,123,58,.2); color: var(--caramel); }
+    .nav-badge { margin-left: auto; font-size: 10px; padding: 1px 7px; border-radius: 20px; font-weight: 700; }
+    .nav-badge.orange { background: rgba(201,123,58,.2);  color: var(--caramel); }
     .nav-badge.green  { background: rgba(16,185,129,.15); color: #10b981; }
     .nav-badge.purple { background: rgba(99,102,241,.15); color: #6366f1; }
-
-    .sb-footer {
-      padding: 8px;
-      border-top: 1px solid var(--border);
-    }
+    .nav-badge.teal   { background: rgba(20,184,166,.15); color: #14b8a6; }
+    .nav-badge.gold   { background: rgba(234,179,8,.15);  color: #eab308; }
+    .sb-footer { padding: 8px; border-top: 1px solid var(--border); }
 
     /* MAIN */
-    .main {
-      margin-left: 220px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
+    .main { margin-left: 220px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
     .topbar {
-      position: sticky;
-      top: 0;
-      background: #1a1a1a;
-      border-bottom: 1px solid #ffffff12;
-      padding: 0 32px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: sticky; top: 0;
+      background: #1a1a1a; border-bottom: 1px solid #ffffff12;
+      padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
       z-index: 10;
     }
     .topbar-left h1 { font-size: 16px; font-weight: 700; color: var(--cream); }
     .topbar-left p  { font-size: 12px; color: var(--muted); margin-top: 1px; }
-
     .topbar-right { display: flex; align-items: center; gap: 16px; }
     .site-link {
-      font-size: 12px;
-      color: var(--caramel);
-      text-decoration: none;
-      border: 1px solid rgba(201,123,58,.4);
-      padding: 5px 14px;
-      border-radius: 6px;
-      transition: background .12s;
+      font-size: 12px; color: var(--caramel); text-decoration: none;
+      border: 1px solid rgba(201,123,58,.4); padding: 5px 14px;
+      border-radius: 6px; transition: background .12s;
     }
     .site-link:hover { background: rgba(201,123,58,.1); }
-
     .user-chip { display: flex; align-items: center; gap: 8px; }
     .avatar {
       width: 32px; height: 32px; border-radius: 50%;
@@ -143,71 +95,50 @@
     /* STATS */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin-bottom: 28px;
     }
-
     .stat-card {
       background: var(--espresso-light);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      cursor: pointer;
+      border-radius: 12px; padding: 20px; cursor: pointer;
       transition: border-color .15s, transform .1s;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .stat-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
       background: var(--card-accent, var(--caramel));
-      opacity: 0;
-      transition: opacity .15s;
+      opacity: 0; transition: opacity .15s;
     }
     .stat-card:hover { border-color: rgba(201,123,58,.5); transform: translateY(-2px); }
     .stat-card:hover::before { opacity: 1; }
     .stat-card.active { border-color: var(--card-accent, var(--caramel)); }
     .stat-card.active::before { opacity: 1; }
-
     .stat-card[data-section="bookings"] { --card-accent: #C97B3A; }
     .stat-card[data-section="orders"]   { --card-accent: #10b981; }
     .stat-card[data-section="feedback"] { --card-accent: #6366f1; }
-
+    .stat-card[data-section="users"]    { --card-accent: #14b8a6; }
     .stat-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
-
-    .stat-icon {
-      width: 38px; height: 38px; border-radius: 9px;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .stat-icon { width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
     .stat-icon svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.8; }
     .stat-icon.orange { background: rgba(201,123,58,.2);  color: var(--caramel); }
     .stat-icon.green  { background: rgba(16,185,129,.15); color: #10b981; }
     .stat-icon.purple { background: rgba(99,102,241,.15); color: #6366f1; }
-
+    .stat-icon.teal   { background: rgba(20,184,166,.15); color: #14b8a6; }
     .stat-arrow { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
     .stat-arrow svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
-
     .stat-num   { font-size: 34px; font-weight: 700; color: var(--cream); line-height: 1; }
     .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
     .stat-hint  { font-size: 11px; color: var(--muted); margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
 
     /* QUICK ACTIONS */
     .section-label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
+    .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
     .quick-card {
-      background: var(--espresso-light);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px;
-      cursor: pointer;
+      background: var(--espresso-light); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px; cursor: pointer;
       transition: border-color .12s, background .12s;
     }
     .quick-card:hover { border-color: rgba(201,123,58,.4); background: var(--espresso-mid); }
@@ -216,74 +147,36 @@
     .quick-card span { font-size: 11px; color: var(--muted); }
 
     /* PANELS */
-    .panel {
-      display: none;
-      background: var(--espresso-light);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
+    .panel { display: none; background: var(--espresso-light); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
     .panel.visible { display: block; }
-
     .panel-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding: 16px 20px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
       background: var(--espresso);
     }
-    .panel-title {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 14px; font-weight: 700;
-    }
+    .panel-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 700; }
     .panel-title svg { width: 16px; height: 16px; stroke: var(--caramel); fill: none; stroke-width: 2; }
     .panel-count { font-size: 12px; font-weight: 400; color: var(--muted); }
-
     .btn-close {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 12px;
-      padding: 5px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: 'Lato', sans-serif;
-      transition: color .12s, border-color .12s;
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      font-size: 12px; padding: 5px 14px; border-radius: 6px; cursor: pointer;
+      font-family: 'Lato', sans-serif; transition: color .12s, border-color .12s;
     }
     .btn-close:hover { color: var(--cream); border-color: #ffffff33; }
 
     /* TABLE */
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     thead th {
-      padding: 10px 20px;
-      text-align: left;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      background: rgba(0,0,0,.2);
-      border-bottom: 1px solid var(--border);
+      padding: 10px 20px; text-align: left; font-size: 11px; font-weight: 700;
+      color: var(--muted); text-transform: uppercase; letter-spacing: .05em;
+      background: rgba(0,0,0,.2); border-bottom: 1px solid var(--border);
     }
-    tbody td {
-      padding: 13px 20px;
-      border-bottom: 1px solid var(--border);
-      color: var(--cream);
-      vertical-align: middle;
-    }
+    tbody td { padding: 13px 20px; border-bottom: 1px solid var(--border); color: var(--cream); vertical-align: middle; }
     tbody tr:last-child td { border-bottom: none; }
     tbody tr:hover td { background: rgba(255,255,255,.03); }
 
     /* BADGES */
-    .badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .02em;
-    }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: .02em; }
     .badge-pending          { background: rgba(245,158,11,.15);  color: #f59e0b; }
     .badge-confirmed        { background: rgba(16,185,129,.15);  color: #10b981; }
     .badge-cancelled        { background: rgba(239,68,68,.15);   color: #ef4444; }
@@ -291,21 +184,33 @@
     .badge-approved         { background: rgba(16,185,129,.15);  color: #10b981; }
     .badge-out_for_delivery { background: rgba(99,102,241,.15);  color: #6366f1; }
     .badge-delivered        { background: rgba(16,185,129,.3);   color: #10b981; }
+    .badge-active           { background: rgba(16,185,129,.15);  color: #10b981; }
+    .badge-inactive         { background: rgba(239,68,68,.15);   color: #ef4444; }
     .badge-rating-good      { background: rgba(16,185,129,.15);  color: #10b981; }
     .badge-rating-avg       { background: rgba(245,158,11,.15);  color: #f59e0b; }
     .badge-rating-poor      { background: rgba(239,68,68,.15);   color: #ef4444; }
+    .badge-online           { background: rgba(99,102,241,.15);  color: #6366f1; }
+    .badge-physical         { background: rgba(234,179,8,.15);   color: #eab308; }
 
-    .stars { color: #f59e0b; font-size: 12px; letter-spacing: 1px; }
-
-    .empty {
-      text-align: center;
-      padding: 48px;
-      color: var(--muted);
-      font-size: 13px;
+    /* ACTION BUTTONS */
+    .btn-deactivate {
+      background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3);
+      color: #ef4444; padding: 4px 12px; border-radius: 6px;
+      font-size: 12px; cursor: pointer; font-family: 'Lato', sans-serif;
+      transition: background .12s;
     }
+    .btn-deactivate:hover { background: rgba(239,68,68,.2); }
+    .btn-activate {
+      background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.3);
+      color: #10b981; padding: 4px 12px; border-radius: 6px;
+      font-size: 12px; cursor: pointer; font-family: 'Lato', sans-serif;
+      transition: background .12s;
+    }
+    .btn-activate:hover { background: rgba(16,185,129,.2); }
+
+    .empty { text-align: center; padding: 48px; color: var(--muted); font-size: 13px; }
     .empty svg { width: 36px; height: 36px; stroke: #ffffff18; fill: none; stroke-width: 1.2; margin: 0 auto 12px; display: block; }
 
-    /* SCROLLBAR */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #ffffff18; border-radius: 3px; }
@@ -345,6 +250,28 @@
       Feedback
       <span class="nav-badge purple">{{ total_feedback }}</span>
     </a>
+
+    <a href="#" class="nav-item" id="nav-users" onclick="showSection('users'); return false;">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Users
+      <span class="nav-badge teal">{{ total_users }}</span>
+    </a>
+
+    {% if request.user.is_superuser or request.user.staff_profile.role == 'manager' or request.user.staff_profile.role == 'receptionist_physical' %}
+    <div class="sb-section-label" style="margin-top:8px;">Staff tools</div>
+
+    <a href="{% url 'physical_order' %}" class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"/></svg>
+      New physical order
+    </a>
+    {% endif %}
+
+    {% if request.user.is_superuser %}
+    <a href="{% url 'create_staff' %}" class="nav-item" id="nav-staff">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      Create staff
+    </a>
+    {% endif %}
 
     <div class="sb-section-label" style="margin-top:8px;">Manage</div>
 
@@ -429,6 +356,18 @@
         <div class="stat-hint">Click to read feedback</div>
       </div>
 
+      <div class="stat-card" data-section="users" onclick="showSection('users')">
+        <div class="stat-top">
+          <div class="stat-icon teal">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <span class="stat-arrow">View all <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </div>
+        <div class="stat-num">{{ total_users }}</div>
+        <div class="stat-label">Registered customers</div>
+        <div class="stat-hint">Click to manage users</div>
+      </div>
+
     </div>
 
     <!-- OVERVIEW -->
@@ -443,18 +382,26 @@
         <div class="quick-card" onclick="showSection('orders')">
           <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
           <p>View orders</p>
-          <span>All delivery orders</span>
+          <span>All delivery & physical orders</span>
         </div>
         <div class="quick-card" onclick="window.location='/admin/core/menuitem/'">
           <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
           <p>Manage menu</p>
           <span>Add or edit items</span>
         </div>
-        <div class="quick-card" onclick="showSection('feedback')">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-          <p>Read feedback</p>
-          <span>Customer responses</span>
+        {% if request.user.is_superuser %}
+        <div class="quick-card" onclick="window.location='{% url 'create_staff' %}'">
+          <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <p>Create staff</p>
+          <span>Managers & receptionists</span>
         </div>
+        {% else %}
+        <div class="quick-card" onclick="showSection('users')">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <p>Manage users</p>
+          <span>Activate or deactivate</span>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -472,14 +419,8 @@
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Location</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Guests</th>
-            <th>Special requests</th>
-            <th>Status</th>
+            <th>Name</th><th>Email</th><th>Location</th><th>Date</th>
+            <th>Time</th><th>Guests</th><th>Special requests</th><th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -519,22 +460,29 @@
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Delivery location</th>
-            <th>Delivery time</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Date</th>
+            <th>Name</th><th>Source</th><th>Table / Delivery</th>
+            <th>Handled by</th><th>Total</th><th>Status</th><th>Date</th>
           </tr>
         </thead>
         <tbody>
           {% for o in orders %}
           <tr>
             <td><strong>{{ o.first_name }} {{ o.last_name }}</strong></td>
-            <td style="color:var(--muted);">{{ o.phone|default:"—" }}</td>
-            <td>{{ o.delivery_location }}</td>
-            <td style="color:var(--muted);">{{ o.delivery_time }}</td>
+            <td>
+              {% if o.source == 'physical' %}
+                <span class="badge badge-physical">Physical</span>
+              {% else %}
+                <span class="badge badge-online">Online</span>
+              {% endif %}
+            </td>
+            <td style="color:var(--muted);">
+              {% if o.source == 'physical' %}
+                Table {{ o.table_number|default:"—" }}
+              {% else %}
+                {{ o.delivery_location|default:"—" }}
+              {% endif %}
+            </td>
+            <td style="color:var(--muted);">{{ o.handled_by.username|default:"—" }}</td>
             <td style="color:#10b981;font-weight:700;">UGX {{ o.total_price|floatformat:0 }}</td>
             <td><span class="badge badge-{{ o.status }}">{{ o.get_status_display }}</span></td>
             <td style="color:var(--muted);">{{ o.created_at|date:"M d, Y" }}</td>
@@ -564,12 +512,8 @@
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Branch</th>
-            <th>Rating</th>
-            <th>Message</th>
-            <th>Date</th>
+            <th>Name</th><th>Email</th><th>Branch</th>
+            <th>Rating</th><th>Message</th><th>Date</th>
           </tr>
         </thead>
         <tbody>
@@ -601,15 +545,70 @@
       {% endif %}
     </div>
 
+    <!-- USERS PANEL -->
+    <div id="section-users" class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          Registered customers
+          <span class="panel-count">({{ total_users }})</span>
+        </div>
+        <button class="btn-close" onclick="closeSection('users')">✕ Close</button>
+      </div>
+      {% if users %}
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th><th>Full name</th><th>Email</th>
+            <th>Date joined</th><th>Status</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in users %}
+          <tr>
+            <td><strong>{{ u.username }}</strong></td>
+            <td>{{ u.get_full_name|default:"—" }}</td>
+            <td style="color:var(--muted);">{{ u.email }}</td>
+            <td style="color:var(--muted);">{{ u.date_joined|date:"M d, Y" }}</td>
+            <td>
+              {% if u.is_active %}
+                <span class="badge badge-active">Active</span>
+              {% else %}
+                <span class="badge badge-inactive">Inactive</span>
+              {% endif %}
+            </td>
+            <td>
+              <form method="POST" action="{% url 'toggle_user' u.id %}" style="display:inline;">
+                {% csrf_token %}
+                {% if u.is_active %}
+                  <button type="submit" class="btn-deactivate">Deactivate</button>
+                {% else %}
+                  <button type="submit" class="btn-activate">Activate</button>
+                {% endif %}
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="empty">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        No registered customers yet.
+      </div>
+      {% endif %}
+    </div>
+
   </div>
 </main>
 
 <script>
-  const sections = ['bookings', 'orders', 'feedback'];
+  const sections = ['bookings', 'orders', 'feedback', 'users'];
   const titles = {
-    bookings: { h: 'Table bookings',     sub: 'All reservation records' },
-    orders:   { h: 'Orders',             sub: 'All delivery orders' },
-    feedback: { h: 'Customer feedback',  sub: 'What customers are saying' },
+    bookings: { h: 'Table bookings',       sub: 'All reservation records' },
+    orders:   { h: 'Orders',               sub: 'All delivery & physical orders' },
+    feedback: { h: 'Customer feedback',    sub: 'What customers are saying' },
+    users:    { h: 'Registered customers', sub: 'Manage customer accounts' },
   };
 
   function showSection(name) {

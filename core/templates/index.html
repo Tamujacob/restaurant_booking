@@ -19,6 +19,12 @@
     <li><a href="#about">About</a></li>
     <li><a href="#locations">Locations</a></li>
     <li><a href="#book" class="nav-cta">Book a Table</a></li>
+    {% if user.is_authenticated %}
+      <li><a href="{% url 'customer_logout' %}">Logout</a></li>
+    {% else %}
+      <li><a href="{% url 'customer_login' %}">Login</a></li>
+      <li><a href="{% url 'customer_signup' %}" class="nav-cta">Sign Up</a></li>
+    {% endif %}
   </ul>
   <div class="hamburger" onclick="toggleMenu()" id="hamburger">
     <span></span><span></span><span></span>
