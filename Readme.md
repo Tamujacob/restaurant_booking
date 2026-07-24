@@ -71,7 +71,7 @@ python manage.py createsuperuser
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 restaurant_booking/
@@ -181,7 +181,7 @@ Render watches `main` and auto-deploys on every push — no manual deploy steps 
 
 ---
 
-## 📦 Deployment (Render)
+##  Deployment (Render)
 
 The project is deployed on [Render](https://render.com) as a Web Service.
 
