@@ -1,35 +1,42 @@
-# ☕ Café Javas Website Clone
+#  Harvest & Hearth
 
-> A clone of the [Café Javas Uganda](https://cafejavas.co.ug) restaurant website — rebuilt from scratch using HTML, CSS, JavaScript, and Django as the backeend. Here is the link to access the clone (https://cafe-javas-clone-restaurant.onrender.com)
+> *From Harvest to Hearth — Every Meal, Made Warm.*
+
+A full-stack restaurant management platform covering **cafe, lunch, and supper** — built with Django, featuring customer accounts, Google Sign-In, staff role management, and a live order/booking system. Live demo: [cafe-javas-clone-restaurant.onrender.com](https://cafe-javas-clone-restaurant.onrender.com)
 
 ---
 
 ## 🍽️ About This Project
 
-This project is a **clone of the official Café Javas website** — one of Uganda's most popular restaurant chains, known for its great food, perfected drinks, and warm hospitality across Kampala and beyond.
+**Harvest & Hearth** is a restaurant platform designed to feel warm and welcoming from morning coffee through to supper. It combines a polished customer-facing website — menu browsing, table booking, and food ordering — with a full backend system for staff to manage physical and online orders, customer accounts, and day-to-day operations.
 
-The clone replicates the look, feel, and core functionality of the Café Javas website, including their menu categories (Big on Breakfast, Generous Big Meals, Perfected Drinks, and Decadent Desserts), their branch locations, table booking experience, and overall warm coffee-shop aesthetic.
+The platform covers three meal periods — cafe, lunch, and supper — with real authentication, role-based staff access, and a complete order pipeline from browsing to checkout.
 
-It is built for **learning and portfolio purposes** using vanilla HTML, CSS, and JavaScript on the frontend, with **Django** powering the backend.
+Built for **learning and portfolio purposes**, combining vanilla HTML, CSS, and JavaScript on the frontend with **Django** powering the backend.
 
 ---
 
-## ✨ What the Clone Includes
+##  Features
 
 | Feature | Description |
 |---|---|
 | 🏠 Home Page | Hero banner with CTAs, animated entrance, and a stats bar |
-| 🍳 Menu | 24 food and drink items across 4 categories with live filtering |
-| 🛒 Order Food | Slide-out cart to add items, adjust quantities, and place an order |
+| 🍳 Menu | Food and drink items across categories (breakfast, mains, drinks, desserts) with live filtering |
+| 🛒 Order Food | Slide-out cart to add items, adjust quantities, and place an order — online or in-person |
 | 📅 Book a Table | Reservation form with date, time, guests, location, and special requests |
-| 🏢 About Us | Brand story, values, and a photo layout matching Café Javas' identity |
-| 📍 Locations | All 9 Uganda branches (Kampala + Entebbe) listed with opening hours |
-| 🔐 Admin Login | Custom branded admin login page matching the Café Javas identity |
+| 🏢 About Us | Brand story, values, and a warm, coffee-house-inspired identity |
+| 📍 Locations | Multiple branches listed with opening hours |
+| 🔐 Account Login/Signup | Customer accounts required to book or order, with email verification |
+| 🌐 Google Sign-In | One-click sign-in via Google (django-allauth), auto-linked to existing accounts by email |
+| 👥 Staff Roles | Manager, Receptionist (Physical Orders), Receptionist (Online Orders) — each with role-gated tools |
+| 🧾 Physical Order Desk | Walk-in order form for receptionists, tagging orders by source (physical vs. online) |
+| 📊 Dashboard | Staff dashboard with role-gated tools, order source, and table info |
+| 🔌 REST API | Built with Django REST Framework |
 | 📱 Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
 
 ---
 
-## 🗂️ File Structure
+## 🗂 File Structure
 
 ```
 restaurant_booking/
@@ -39,8 +46,10 @@ restaurant_booking/
 │   ├── wsgi.py
 │   └── asgi.py
 ├── core/                       # Django app
+│   ├── adapters.py             # Custom allauth adapter (Google sign-in auto-linking)
 │   ├── templates/
 │   │   ├── index.html          # Main website page
+│   │   ├── customer_login.html # Customer login/signup page (with Google Sign-In)
 │   │   └── login.html          # Custom admin login page
 │   ├── static/
 │   │   ├── styles/
@@ -49,24 +58,35 @@ restaurant_booking/
 │   │       └── index.js        # Menu data, cart logic, and interactions
 │   ├── views.py                # Page views
 │   ├── urls.py                 # App URL routes
-│   ├── models.py               # Database models
+│   ├── models.py               # Database models (StaffProfile, bookings, orders)
 │   └── admin.py
 ├── manage.py                   # Django management commands
+├── requirements.txt
 ├── README.md
 └── .gitignore
 ```
 
 ---
 
-## 🚀 Running the Project
+##  Running the Project
 
 ### Requirements
 - Python 3.x
-- Django
+- Django + django-allauth (see `requirements.txt`)
 
-### Install Django
+### Install dependencies
 ```bash
-pip install django
+pip install -r requirements.txt
+```
+
+### Apply migrations
+```bash
+py manage.py migrate
+```
+
+### Create an admin superuser
+```bash
+py manage.py createsuperuser
 ```
 
 ### Run the development server
@@ -77,25 +97,17 @@ py manage.py runserver
 Then open your browser at:
 ```
 http://127.0.0.1:8000/          → Main website
-http://127.0.0.1:8000/login/    → Admin login page
+http://127.0.0.1:8000/login/    → Customer login / signup (incl. Google Sign-In)
 http://127.0.0.1:8000/admin/    → Django admin dashboard
 ```
 
-### Create an admin superuser
-```bash
-py manage.py createsuperuser
-```
-
-### Apply migrations
-```bash
-py manage.py migrate
-```
+> **Note:** Email verification uses Django's console email backend in local development — verification links print to your terminal instead of sending real emails.
 
 ---
 
-## 🎨 Design & Branding
+##  Design & Branding
 
-The clone closely mirrors Café Javas' warm, coffee-house visual identity:
+Harvest & Hearth keeps the warm, coffee-house visual identity it started with:
 
 | Element | Value |
 |---|---|
@@ -108,9 +120,28 @@ The clone closely mirrors Café Javas' warm, coffee-house visual identity:
 
 ---
 
-## 🧠 JavaScript Overview (`index.js`)
+## 🔐 Authentication & Accounts
 
-All frontend interactivity lives in `index.js`:
+- Customers must sign up or log in to book a table or place an order (`next` param redirects them back to what they clicked after logging in)
+- Manual `authenticate()`-based login flow in `customer_login.html` / `views.py`
+- **Google Sign-In** via django-allauth — new Google logins auto-generate a username and link to an existing account by matching email (custom adapter in `core/adapters.py`), skipping allauth's manual signup form
+- **Email verification** required for username/password signups — blocks unverified accounts at login, without locking out pre-existing users who have no verification record
+
+---
+
+##  Staff & Roles
+
+- `StaffProfile` model with three roles:
+  - **Manager**
+  - **Receptionist – Physical Orders**
+  - **Receptionist – Online Orders**
+- Superuser-only "Create Staff" page
+- Physical/walk-in order form for receptionists — orders tagged `source='physical'` or `source='online'`
+- Dashboard shows role-gated staff tools and order source/table info
+
+---
+
+##  JavaScript Overview (`index.js`)
 
 | Function | Purpose |
 |---|---|
@@ -127,21 +158,9 @@ All frontend interactivity lives in `index.js`:
 
 ---
 
-## 🐍 Django Overview
-
-| File | Purpose |
-|---|---|
-| `cafejavas/settings.py` | Project configuration — installed apps, static files, templates |
-| `cafejavas/urls.py` | Root URL router — points to the `core` app |
-| `core/views.py` | Renders the home page and admin login page |
-| `core/urls.py` | Defines URL patterns for all pages |
-| `core/models.py` | Database models (bookings, orders — to be built out) |
-
----
-
 ## 🍴 Adding a New Menu Item
 
-All menu items are stored as objects in the `menuData` array inside `index.js`. To add a new dish, just add a new entry:
+Menu items are stored as objects in the `menuData` array inside `index.js`:
 
 ```js
 {
@@ -156,52 +175,33 @@ All menu items are stored as objects in the `menuData` array inside `index.js`. 
 }
 ```
 
-The page will automatically render it — no changes to HTML needed.
-
----
-
-## 📍 Locations in the Clone
-
-Matching the real Café Javas branches:
-
-- Kira Road, Kampala
-- Kampala Boulevard
-- Oasis Mall, Kampala
-- Nakawa, Kampala
-- Namirembe, Kampala
-- Lugogo, Kampala
-- Bombo Road, Kampala
-- Parliamentary Avenue, Kampala
-- Victoria Mall, Entebbe
+The page will automatically render it — no HTML changes needed.
 
 ---
 
 ## 🛠️ Built With
 
-- **HTML5** — Page structure
-- **CSS3** — Styling, grid, flexbox, animations
-- **Vanilla JavaScript** — All frontend interactivity, no frameworks
+- **HTML5 / CSS3 / Vanilla JavaScript** — Frontend, no frameworks
 - **Django** — Python backend framework
-- **SQLite** — Default Django database
+- **Django REST Framework** — REST API
+- **django-allauth** — Google Sign-In and account/email verification
+- **SQLite** — Database (demo)
 - **Google Fonts** — Playfair Display, Lato, Dancing Script
-- **Unsplash** — Food photography
 
 ---
 
-## 🔮 Planned Backend Features
+##  Roadmap
 
 | Feature | Status |
 |---|---|
-| Save table bookings to database | 🔜 Coming soon |
-| Store menu items in database | 🔜 Coming soon |
-| Order tracking system | 🔜 Coming soon |
-| User accounts and login | 🔜 Coming soon |
+| Customer accounts, login, and email verification | ✅ Done |
+| Google Sign-In | ✅ Done |
+| Staff roles & physical order desk | ✅ Done |
 | Django admin dashboard | ✅ Available at `/admin/` |
+| Order status tracking | 🔜 In progress |
+| Menu management via API | 🔜 In progress |
+| Full customer profile page | 🔜 In progress |
+| PostgreSQL for production | 🔜 Planned |
 
 ---
 
-## ⚠️ Disclaimer
-
-This is an **unofficial clone** built strictly for educational and portfolio purposes. It is not affiliated with, endorsed by, or connected to Café Javas Uganda in any way. All brand names, menu items, and location data are the property of Café Javas.
-
-To visit the real Café Javas website, go to 👉 [cafejavas.co.ug](https://cafejavas.co.ug)
