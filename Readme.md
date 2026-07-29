@@ -89,7 +89,7 @@ py manage.py migrate
 py manage.py createsuperuser
 ```
 
-### Run the development server
+**2. Create and activate a virtual environment**
 ```bash
 py manage.py runserver
 ```
@@ -143,7 +143,7 @@ Harvest & Hearth keeps the warm, coffee-house visual identity it started with:
 
 ##  JavaScript Overview (`index.js`)
 
-| Function | Purpose |
+| Branch | Purpose |
 |---|---|
 | `renderMenu(filter)` | Reads menu data and builds the cards on the page |
 | `switchTab(cat)` | Filters displayed items by category |
