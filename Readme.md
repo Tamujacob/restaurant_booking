@@ -16,11 +16,11 @@ The platform covers three meal periods — cafe, lunch, and supper — with real
 
 Built for **learning and portfolio purposes**, combining vanilla HTML, CSS, and JavaScript on the frontend with **Django** powering the backend.
 
-> 🚧 **Status:** Under active development — core booking, ordering, accounts, and dashboard features are live; order status tracking and menu management via the API are still being built.
+>  **Status:** Under active development — core booking, ordering, accounts, and dashboard features are live; order status tracking and menu management via the API are still being built.
 
 ---
 
-## ✨ Features
+##  Features
 
 | Feature | Description |
 |---|---|
@@ -41,7 +41,7 @@ Built for **learning and portfolio purposes**, combining vanilla HTML, CSS, and 
 
 ---
 
-## 🔌 REST API Endpoints
+##  REST API Endpoints
 
 Built with **Django REST Framework**. All endpoints are accessible at the base URL of the live demo, and each has a browsable API view in the browser.
 
@@ -55,7 +55,7 @@ Built with **Django REST Framework**. All endpoints are accessible at the base U
 
 ---
 
-## 📊 Admin Dashboard
+##  Admin Dashboard
 
 A protected admin dashboard is available at `/dashboard/` — only accessible to staff/superuser accounts.
 
@@ -76,7 +76,7 @@ python manage.py createsuperuser
 
 ---
 
-## 🔐 Authentication & Accounts
+##  Authentication & Accounts
 
 - Customers must sign up or log in to book a table or place an order (`next` param redirects them back to what they clicked after logging in)
 - Manual `authenticate()`-based login flow in `customer_login.html` / `views.py`
@@ -97,7 +97,7 @@ python manage.py createsuperuser
 
 ---
 
-## 🗂️ Project Structure
+##  Project Structure
 
 ```
 restaurant_booking/
@@ -133,7 +133,7 @@ restaurant_booking/
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -195,7 +195,7 @@ http://127.0.0.1:8000/admin/      → Django admin
 
 ---
 
-## 🎨 Design & Branding
+##  Design & Branding
 
 Harvest & Hearth keeps a warm, coffee-house visual identity:
 
@@ -248,7 +248,7 @@ The page will automatically render it — no HTML changes needed.
 
 ---
 
-## 🌿 Branch Workflow
+##  Branch Workflow
 
 This project uses a two-branch Git workflow:
 
@@ -276,7 +276,7 @@ Render watches `main` and auto-deploys on every push — no manual deploy steps 
 
 ---
 
-## ☁️ Deployment (Render)
+##  Deployment (Render)
 
 The project is deployed on [Render](https://render.com) as a Web Service.
 
@@ -302,7 +302,7 @@ Every push to `main` triggers an automatic redeploy on Render.
 
 ---
 
-## 🔮 Roadmap
+##  Roadmap
 
 | Feature | Status |
 |---|---|
