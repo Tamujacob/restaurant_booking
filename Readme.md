@@ -1,42 +1,49 @@
-# ☕ Café Javas Website Clone
+# Harvest & Hearth
 
-> A clone of the [Café Javas Uganda](https://cafejavas.co.ug) restaurant website — rebuilt from scratch using HTML, CSS, JavaScript, and Django as the backend.
->
+> *From Harvest to Hearth — Every Meal, Made Warm.*
+
+A full-stack restaurant management platform covering **cafe, lunch, and supper** — built with Django, featuring customer accounts, Google Sign-In, staff role management, a REST API, and an admin dashboard.
+
 > 🔗 **Live demo:** [https://cafe-javas-clone-restaurant.onrender.com](https://cafe-javas-clone-restaurant.onrender.com)
 
 ---
 
 ## 🍽️ About This Project
 
-This project is a **clone of the official Café Javas website** — one of Uganda's most popular restaurant chains, known for its great food, perfected drinks, and warm hospitality across Kampala and beyond.
+**Harvest & Hearth** is a restaurant platform designed to feel warm and welcoming from morning coffee through to supper. It combines a polished customer-facing website — menu browsing, table booking, and food ordering — with a full backend system for staff to manage physical and online orders, customer accounts, and day-to-day operations.
 
-The clone replicates the look, feel, and core functionality of the Café Javas website, including their menu categories (Big on Breakfast, Generous Big Meals, Perfected Drinks, and Decadent Desserts), their branch locations, table booking experience, and overall warm coffee-shop aesthetic.
+The platform covers three meal periods — cafe, lunch, and supper — with real authentication, role-based staff access, a REST API layer, an admin dashboard, and a complete order pipeline from browsing to checkout.
 
-It is built for **learning and portfolio purposes** using vanilla HTML, CSS, and JavaScript on the frontend, with **Django** powering the backend, a **REST API** layer built with Django REST Framework, and an **admin dashboard** for managing bookings, orders, and feedback.
+Built for **learning and portfolio purposes**, combining vanilla HTML, CSS, and JavaScript on the frontend with **Django** powering the backend.
+
+> 🚧 **Status:** Under active development — core booking, ordering, accounts, and dashboard features are live; order status tracking and menu management via the API are still being built.
 
 ---
 
-##  What the Clone Includes
+## ✨ Features
 
 | Feature | Description |
 |---|---|
 | 🏠 Home Page | Hero banner with CTAs, animated entrance, and a stats bar |
-| 🍳 Menu | 24 food and drink items across 4 categories with live filtering |
-| 🛒 Order Food | Slide-out cart to add items, adjust quantities, and place an order |
+| 🍳 Menu | Food and drink items across categories (breakfast, mains, drinks, desserts) with live filtering |
+| 🛒 Order Food | Slide-out cart to add items, adjust quantities, and place an order — online or in-person |
 | 📅 Book a Table | Reservation form with date, time, guests, location, and special requests |
 | 💬 Feedback | Customer feedback form with rating and branch selection |
-| 🏢 About Us | Brand story, values, and a photo layout matching Café Javas' identity |
-| 📍 Locations | All 9 Uganda branches (Kampala + Entebbe) listed with opening hours |
-| 🔐 Admin Login | Custom branded admin login page matching the Café Javas identity |
-| 📊 Admin Dashboard | Protected dashboard showing bookings, orders, and feedback with stat cards |
-| 🔌 REST API | Five API endpoints built with Django REST Framework |
-| 📱Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
+| 🏢 About Us | Brand story, values, and a warm, coffee-house-inspired identity |
+| 📍 Locations | Multiple branches listed with opening hours |
+| 🔐 Account Login/Signup | Customer accounts required to book or order, with email verification |
+| 🌐 Google Sign-In | One-click sign-in via Google (django-allauth), auto-linked to existing accounts by email |
+| 👥 Staff Roles | Manager, Receptionist (Physical Orders), Receptionist (Online Orders) — each with role-gated tools |
+| 🧾 Physical Order Desk | Walk-in order form for receptionists, tagging orders by source (physical vs. online) |
+| 📊 Admin Dashboard | Protected dashboard with stat cards for bookings, orders, and feedback |
+| 🔌 REST API | Five endpoints built with Django REST Framework |
+| 📱 Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
 
 ---
 
-##  REST API Endpoints
+## 🔌 REST API Endpoints
 
-Built with **Django REST Framework**. All endpoints are accessible at the base URL of the live demo.
+Built with **Django REST Framework**. All endpoints are accessible at the base URL of the live demo, and each has a browsable API view in the browser.
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -46,11 +53,9 @@ Built with **Django REST Framework**. All endpoints are accessible at the base U
 | `POST` | `/api/orders/` | Submit a new food order |
 | `POST` | `/api/feedback/` | Submit customer feedback |
 
-The browsable API (DRF's built-in UI) is available at each endpoint in the browser.
-
 ---
 
-##  Admin Dashboard
+## 📊 Admin Dashboard
 
 A protected admin dashboard is available at `/dashboard/` — only accessible to staff/superuser accounts.
 
@@ -64,14 +69,35 @@ A protected admin dashboard is available at `/dashboard/` — only accessible to
 - Quick action cards for common tasks
 - Status badges colour-coded by state (pending, confirmed, delivered, cancelled, etc.)
 
-Access requires a Django superuser account. Create one with:
+Create a superuser to access it:
 ```bash
 python manage.py createsuperuser
 ```
 
 ---
 
-## Project Structure
+## 🔐 Authentication & Accounts
+
+- Customers must sign up or log in to book a table or place an order (`next` param redirects them back to what they clicked after logging in)
+- Manual `authenticate()`-based login flow in `customer_login.html` / `views.py`
+- **Google Sign-In** via django-allauth — new Google logins auto-generate a username and link to an existing account by matching email (custom adapter in `core/adapters.py`), skipping allauth's manual signup form
+- **Email verification** required for username/password signups — blocks unverified accounts at login, without locking out pre-existing users who have no verification record
+
+---
+
+## 👥 Staff & Roles
+
+- `StaffProfile` model with three roles:
+  - **Manager**
+  - **Receptionist – Physical Orders**
+  - **Receptionist – Online Orders**
+- Superuser-only "Create Staff" page
+- Physical/walk-in order form for receptionists — orders tagged `source='physical'` or `source='online'`
+- Dashboard shows role-gated staff tools and order source/table info
+
+---
+
+## 🗂️ Project Structure
 
 ```
 restaurant_booking/
@@ -80,33 +106,41 @@ restaurant_booking/
 │   ├── urls.py
 │   ├── wsgi.py
 │   └── asgi.py
-├── core/                       # Main Django app
+├── core/                       # Django app
+│   ├── adapters.py             # Custom allauth adapter (Google sign-in auto-linking)
 │   ├── templates/
 │   │   ├── index.html          # Main website page
+│   │   ├── customer_login.html # Customer login/signup page (with Google Sign-In)
 │   │   ├── login.html          # Custom admin login page
 │   │   └── dashboard.html      # Admin dashboard
-│   ├── static/                 # CSS, JS, images
-│   ├── models.py               # TableBooking, Order, OrderItem, MenuItem, Location, CustomerFeedback
+│   ├── static/
+│   │   ├── styles/
+│   │   │   └── index.css       # All styling and responsive layout
+│   │   └── scripts/
+│   │       └── index.js        # Menu data, cart logic, and interactions
 │   ├── views.py                # Template views + API views
 │   ├── serializers.py          # DRF serializers for all models
 │   ├── forms.py                # Django forms for template-based submissions
 │   ├── urls.py                 # All URL patterns (template + API routes)
+│   ├── models.py               # TableBooking, Order, OrderItem, MenuItem, Location, CustomerFeedback, StaffProfile
 │   └── admin.py                # Django admin registration
-├── manage.py
+├── manage.py                   # Django management commands
 ├── requirements.txt
 ├── build.sh                    # Render build script (collectstatic + migrate)
+├── README.md
 └── .gitignore
 ```
 
 ---
 
-##  Tech Stack
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
 | Frontend | HTML5, CSS3, Vanilla JavaScript |
 | Backend | Python 3, Django 5 |
 | REST API | Django REST Framework |
+| Auth | django-allauth (Google Sign-In, email verification) |
 | Database | SQLite (development) |
 | Static files | WhiteNoise |
 | Deployment | Render (auto-deploy from GitHub) |
@@ -114,7 +148,7 @@ restaurant_booking/
 
 ---
 
-##  Running Locally
+## 🚀 Running Locally
 
 **1. Clone the repo**
 ```bash
@@ -149,11 +183,72 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Visit `http://127.0.0.1:8000` for the site and `http://127.0.0.1:8000/dashboard/` for the admin dashboard.
+Then visit:
+```
+http://127.0.0.1:8000/            → Main website
+http://127.0.0.1:8000/login/      → Customer login / signup (incl. Google Sign-In)
+http://127.0.0.1:8000/dashboard/  → Admin dashboard
+http://127.0.0.1:8000/admin/      → Django admin
+```
+
+> **Note:** Email verification uses Django's console email backend in local development — verification links print to your terminal instead of sending real emails.
 
 ---
 
-##  Branch Workflow
+## 🎨 Design & Branding
+
+Harvest & Hearth keeps a warm, coffee-house visual identity:
+
+| Element | Value |
+|---|---|
+| Primary Accent | `#C97B3A` — Caramel |
+| Dark Background | `#1A0A00` — Espresso |
+| Light Background | `#F5EDD9` — Cream |
+| Heading Font | Playfair Display |
+| Body Font | Lato |
+| Logo Font | Dancing Script |
+
+---
+
+## 🧠 JavaScript Overview (`index.js`)
+
+| Function | Purpose |
+|---|---|
+| `renderMenu(filter)` | Reads menu data and builds the cards on the page |
+| `switchTab(cat)` | Filters displayed items by category |
+| `addToCart(id)` | Adds a dish to the cart |
+| `removeFromCart(id)` | Reduces quantity or removes item from cart |
+| `updateCartUI()` | Refreshes the cart sidebar with current items and total price |
+| `checkout()` | Submits the order and shows a confirmation |
+| `submitBooking()` | Validates and confirms a table reservation |
+| `showToast(msg)` | Displays a brief notification pop-up |
+| `showModal(...)` | Shows a full confirmation dialog |
+| `toggleMenu()` | Opens or closes the mobile navigation menu |
+
+---
+
+## 🍴 Adding a New Menu Item
+
+Menu items are stored as objects in the `menuData` array inside `index.js`:
+
+```js
+{
+  id: 25,                  // Must be unique
+  cat: 'mains',            // breakfast | mains | drinks | desserts
+  name: 'Rolex',           // Display name
+  desc: 'Ugandan street food — egg and veggies rolled in a chapati.',
+  price: 15000,            // Price in UGX (number, no quotes)
+  badge: 'Local Fave',     // Optional tag shown on the card
+  emoji: '🌯',             // Shown in the cart
+  img: 'https://...'       // Food image URL
+}
+```
+
+The page will automatically render it — no HTML changes needed.
+
+---
+
+## 🌿 Branch Workflow
 
 This project uses a two-branch Git workflow:
 
@@ -181,7 +276,7 @@ Render watches `main` and auto-deploys on every push — no manual deploy steps 
 
 ---
 
-##  Deployment (Render)
+## ☁️ Deployment (Render)
 
 The project is deployed on [Render](https://render.com) as a Web Service.
 
@@ -203,13 +298,26 @@ python manage.py collectstatic --no-input
 python manage.py migrate
 ```
 
-Every push to `main` on GitHub triggers an automatic redeploy on Render.
+Every push to `main` triggers an automatic redeploy on Render.
 
 ---
 
+## 🔮 Roadmap
+
+| Feature | Status |
+|---|---|
+| Customer accounts, login, and email verification | ✅ Done |
+| Google Sign-In | ✅ Done |
+| Staff roles & physical order desk | ✅ Done |
+| REST API (menu, locations, bookings, orders, feedback) | ✅ Done |
+| Admin dashboard | ✅ Done |
+| Order status tracking | 🔜 In progress |
+| Menu management via API | 🔜 In progress |
+| Full customer profile page | 🔜 In progress |
+| PostgreSQL for production | 🔜 Planned |
+
 ---
 
-## 📌 Status
+## ⚠️ Disclaimer
 
-> 🚧 **Under active development — approximately 50% complete.**
-> Features like the full admin management panel, order status tracking, user authentication, and menu management are still being built.
+Harvest & Hearth is an independent project built strictly for educational and portfolio purposes. Menu items, branch names, and location data are placeholder content for demonstration purposes only.

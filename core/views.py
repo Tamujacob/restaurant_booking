@@ -1,34 +1,34 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm, CustomerSignupForm 
-from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback, TableBooking
 from django.http import JsonResponse
-import json
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from .serializers import (
-    MenuItemSerializer, LocationSerializer,
-    OrderSerializer, FeedbackSerializer, TableBookingSerializer,
-)
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, get_object_or_404
-from functools import wraps
 from django.core.exceptions import PermissionDenied
 from django.utils import timezone
-from .models import StaffProfile, MenuItem, Order, OrderItem
-from .forms import StaffCreationForm
+from functools import wraps
+import json
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+from allauth.account.utils import send_email_confirmation
+from allauth.account.models import EmailAddress
+
+from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm, CustomerSignupForm, StaffCreationForm
+from .models import MenuItem, Order, OrderItem, Location, CustomerFeedback, TableBooking, StaffProfile
+from .serializers import (
+    MenuItemSerializer, LocationSerializer,
+    OrderSerializer, FeedbackSerializer, TableBookingSerializer,
+)
 
 
 def home(request):
     form = TableBookingForm()
     order_form = OrderForm()
     feedback_form = CustomerFeedbackForm()
-
 
     if request.method == 'POST':
         form = TableBookingForm(request.POST)
@@ -40,47 +40,42 @@ def home(request):
             messages.error(request, "Something went wrong. Please check your details and try again.")
 
     menu_items = MenuItem.objects.filter(is_available=True)
-    locations = Location.objects.filter(is_active = True)
+    locations = Location.objects.filter(is_active=True)
     return render(request, 'index.html', {
-    'form': form,
-    'order_form': order_form,    
-    'menu_items': menu_items,
-    'locations':locations,
-    'feedback_form': feedback_form
-})
+        'form': form,
+        'order_form': order_form,
+        'menu_items': menu_items,
+        'locations': locations,
+        'feedback_form': feedback_form
+    })
 
-def admin_login(request):
-    return render(request, 'login.html')
 
 def place_order(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
             order = form.save(commit=False)
-           
             cart_data = json.loads(request.POST.get('cart_items', '[]'))
-            
             total = sum(item['price'] * item['qty'] for item in cart_data)
             order.total_price = total
             order.save()
-           
+
             for item in cart_data:
                 menu_item = MenuItem.objects.get(id=item['id'])
                 OrderItem.objects.create(
-                    order      = order,
-                    menu_item  = menu_item,
-                    item_name  = item['name'],
-                    quantity   = item['qty'],
-                    unit_price = item['price'],
+                    order=order,
+                    menu_item=menu_item,
+                    item_name=item['name'],
+                    quantity=item['qty'],
+                    unit_price=item['price'],
                 )
 
-           
             return JsonResponse({'status': 'success', 'message': f"Thank you {order.first_name}! Your order has been placed and will be delivered to {order.delivery_location}."})
-            
         else:
             return JsonResponse({'status': 'error', 'message': 'Please fill in all required fields correctly.'})
-    
+
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
 
 def submit_feedback(request):
     if request.method == 'POST':
@@ -92,11 +87,10 @@ def submit_feedback(request):
             messages.error(request, "Something went wrong. Please try again.")
         return redirect('home')
 
-    return redirect('home')   
-        
-           
+    return redirect('home')
 
-    # --- API VIEWS ---
+
+# ── API VIEWS ──────────────────────────────────────────────
 
 @api_view(['GET'])
 def api_menu(request):
@@ -117,10 +111,7 @@ def api_bookings(request):
     serializer = TableBookingSerializer(data=request.data)
     if serializer.is_valid():
         booking = serializer.save()
-        return Response(
-            {'message': f"Table booked for {booking.first_name}!"},
-            status=status.HTTP_201_CREATED
-        )
+        return Response({'message': f"Table booked for {booking.first_name}!"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -129,10 +120,7 @@ def api_orders(request):
     serializer = OrderSerializer(data=request.data)
     if serializer.is_valid():
         order = serializer.save()
-        return Response(
-            {'message': f"Order placed for {order.first_name}!"},
-            status=status.HTTP_201_CREATED
-        )
+        return Response({'message': f"Order placed for {order.first_name}!"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -141,46 +129,27 @@ def api_feedback(request):
     serializer = FeedbackSerializer(data=request.data)
     if serializer.is_valid():
         feedback = serializer.save()
-        return Response(
-            {'message': f"Feedback received from {feedback.first_name}!"},
-            status=status.HTTP_201_CREATED
-        )
+        return Response({'message': f"Feedback received from {feedback.first_name}!"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@staff_member_required
-def dashboard(request):
-    bookings = TableBooking.objects.all().order_by('-created_at')
-    orders = Order.objects.all().order_by('-created_at')
-    feedbacks = CustomerFeedback.objects.all().order_by('-created_at')
-
-    context = {
-        'total_bookings': bookings.count(),
-        'total_orders': orders.count(),
-        'total_feedback': feedbacks.count(),
-        'bookings': bookings,
-        'orders': orders,
-        'feedbacks': feedbacks,
-    }
-    return render(request, 'dashboard.html', context)
 
 # ── Customer Signup ──────────────────────────────────────────
+
 def customer_signup(request):
-    form = CustomerSignupForm()
- 
     if request.method == 'POST':
         form = CustomerSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            messages.success(request, f"Welcome, {user.first_name}! Your account has been created.")
-            return redirect('home')
-        else:
-            messages.error(request, "Please fix the errors below and try again.")
- 
+            send_email_confirmation(request, user, signup=True)
+            messages.success(request, "Account created! Check your email (or the terminal, in dev) to verify your account before logging in.")
+            return redirect('customer_login')
+    else:
+        form = CustomerSignupForm()
     return render(request, 'customer_signup.html', {'form': form})
- 
- 
+
+
 # ── Customer Login ───────────────────────────────────────────
+
 def customer_login(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -194,9 +163,18 @@ def customer_login(request):
 
         if user is not None:
             if user.is_staff:
-                # staff trying to log in via customer page — redirect them
                 messages.error(request, "Staff members should use the staff portal.")
                 return redirect('customer_login')
+
+            # Enforce email verification for accounts that have an EmailAddress
+            # record (created via allauth's send_email_confirmation on signup).
+            # Accounts with no such record (e.g. old test users, createsuperuser)
+            # are let through so we don't lock out pre-existing users.
+            email_address = EmailAddress.objects.filter(user=user, email=user.email).first()
+            if email_address and not email_address.verified:
+                messages.error(request, "Please verify your email before logging in. Check your inbox (or terminal) for the confirmation link.")
+                return redirect('customer_login')
+
             login(request, user)
             messages.success(request, f"Welcome back, {user.first_name}!")
             return redirect(next_url)
@@ -204,54 +182,59 @@ def customer_login(request):
             messages.error(request, "Invalid username or password. Please try again.")
 
     return render(request, 'customer_login.html', {'next': next_url})
- 
+
+
 # ── Customer Logout ──────────────────────────────────────────
+
 def customer_logout(request):
     logout(request)
     messages.success(request, "You have been signed out.")
     return redirect('home')
- 
- 
+
+
 # ── Staff Login ──────────────────────────────────────────────
+
 def staff_login(request):
     if request.user.is_authenticated and request.user.is_staff:
         return redirect('dashboard')
- 
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
- 
+
         if user is not None and user.is_staff:
             login(request, user)
             return redirect('dashboard')
         elif user is not None and not user.is_staff:
-            # valid user but not staff
             messages.error(request, "You do not have staff access.")
         else:
             messages.error(request, "Invalid credentials. Please try again.")
- 
+
     return render(request, 'staff_login.html')
 
 
+# ── Dashboard ──────────────────────────────────────────────
+
 @staff_member_required
 def dashboard(request):
-    bookings  = TableBooking.objects.all().order_by('-created_at')
-    orders    = Order.objects.all().order_by('-created_at')
+    bookings = TableBooking.objects.all().order_by('-created_at')
+    orders = Order.objects.all().order_by('-created_at')
     feedbacks = CustomerFeedback.objects.all().order_by('-created_at')
-    users     = User.objects.filter(is_staff=False).order_by('-date_joined')  # customers only
+    users = User.objects.filter(is_staff=False).order_by('-date_joined')  # customers only
 
     context = {
         'total_bookings': bookings.count(),
-        'total_orders':   orders.count(),
+        'total_orders': orders.count(),
         'total_feedback': feedbacks.count(),
-        'total_users':    users.count(),
-        'bookings':       bookings,
-        'orders':         orders,
-        'feedbacks':      feedbacks,
-        'users':          users,
+        'total_users': users.count(),
+        'bookings': bookings,
+        'orders': orders,
+        'feedbacks': feedbacks,
+        'users': users,
     }
     return render(request, 'dashboard.html', context)
+
 
 @staff_member_required
 def toggle_user(request, user_id):
@@ -259,9 +242,12 @@ def toggle_user(request, user_id):
         user = get_object_or_404(User, id=user_id, is_staff=False)
         user.is_active = not user.is_active
         user.save()
-        status = "activated" if user.is_active else "deactivated"
-        messages.success(request, f"{user.username} has been {status}.")
+        toggle_status = "activated" if user.is_active else "deactivated"
+        messages.success(request, f"{user.username} has been {toggle_status}.")
     return redirect('dashboard')
+
+
+# ── Staff role enforcement ────────────────────────────────────
 
 def staff_role_required(*allowed_roles):
     """Superusers and Managers get full access. Other roles must be in allowed_roles."""
@@ -346,4 +332,3 @@ def physical_order(request):
             return redirect('physical_order')
 
     return render(request, 'physical_order.html', {'menu_items': menu_items})
- 
