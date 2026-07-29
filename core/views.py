@@ -14,7 +14,6 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from allauth.account.utils import send_email_confirmation
 from allauth.account.models import EmailAddress
 
 from .forms import TableBookingForm, OrderForm, CustomerFeedbackForm, CustomerSignupForm, StaffCreationForm
@@ -140,12 +139,9 @@ def customer_signup(request):
         form = CustomerSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            send_email_confirmation(request, user, signup=True)
+            EmailAddress.objects.add_email(request, user, user.email, confirm=True)
             messages.success(request, "Account created! Check your email (or the terminal, in dev) to verify your account before logging in.")
             return redirect('customer_login')
-    else:
-        form = CustomerSignupForm()
-    return render(request, 'customer_signup.html', {'form': form})
 
 
 # ── Customer Login ───────────────────────────────────────────
