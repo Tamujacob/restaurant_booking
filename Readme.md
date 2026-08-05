@@ -2,17 +2,21 @@
 
 > *From Harvest to Hearth — Every Meal, Made Warm.*
 
-
-A full-stack restaurant management platform covering **cafe, lunch, and supper** — built with Django, featuring customer accounts, Google Sign-In, staff role management, and a live order/booking system. Live demo: [cafe-javas-clone-restaurant.onrender.com](https://cafe-javas-clone-restaurant.onrender.com)
+![Django](https://img.shields.io/badge/Django-092E20?style=flat&logo=django&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![DRF](https://img.shields.io/badge/Django%20REST%20Framework-ff1709?style=flat&logo=django&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=white)
 
 A full-stack restaurant management platform covering **cafe, lunch, and supper** — built with Django, featuring customer accounts, Google Sign-In, staff role management, a REST API, and an admin dashboard.
 
-> 🔗 **Live demo:** [https://cafe-javas-clone-restaurant.onrender.com](https://cafe-javas-clone-restaurant.onrender.com)
-
+**Live demo:** [https://harvest-and-hearth.onrender.com](https://harvest-and-hearth.onrender.com)
 
 ---
 
-## 🍽️ About This Project
+## About This Project
 
 **Harvest & Hearth** is a restaurant platform designed to feel warm and welcoming from morning coffee through to supper. It combines a polished customer-facing website — menu browsing, table booking, and food ordering — with a full backend system for staff to manage physical and online orders, customer accounts, and day-to-day operations.
 
@@ -20,44 +24,32 @@ The platform covers three meal periods — cafe, lunch, and supper — with real
 
 Built for **learning and portfolio purposes**, combining vanilla HTML, CSS, and JavaScript on the frontend with **Django** powering the backend.
 
->  **Status:** Under active development — core booking, ordering, accounts, and dashboard features are live; order status tracking and menu management via the API are still being built.
+**Status:** Under active development — core booking, ordering, accounts, and dashboard features are live; order status tracking and menu management via the API are still being built.
 
 ---
 
-
-##  Features
+## Features
 
 | Feature | Description |
 |---|---|
-| 🏠 Home Page | Hero banner with CTAs, animated entrance, and a stats bar |
-| 🍳 Menu | Food and drink items across categories (breakfast, mains, drinks, desserts) with live filtering |
-| 🛒 Order Food | Slide-out cart to add items, adjust quantities, and place an order — online or in-person |
-| 📅 Book a Table | Reservation form with date, time, guests, location, and special requests |
-
-| 💬 Feedback | Customer feedback form with rating and branch selection |
-
-| 🏢 About Us | Brand story, values, and a warm, coffee-house-inspired identity |
-| 📍 Locations | Multiple branches listed with opening hours |
-| 🔐 Account Login/Signup | Customer accounts required to book or order, with email verification |
-| 🌐 Google Sign-In | One-click sign-in via Google (django-allauth), auto-linked to existing accounts by email |
-| 👥 Staff Roles | Manager, Receptionist (Physical Orders), Receptionist (Online Orders) — each with role-gated tools |
-| 🧾 Physical Order Desk | Walk-in order form for receptionists, tagging orders by source (physical vs. online) |
-
-| 📊 Dashboard | Staff dashboard with role-gated tools, order source, and table info |
-| 🔌 REST API | Built with Django REST Framework |
-| 📱 Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
+| Home Page | Hero banner with CTAs, animated entrance, and a stats bar |
+| Menu | Food and drink items across categories (breakfast, mains, drinks, desserts) with live filtering |
+| Order Food | Slide-out cart to add items, adjust quantities, and place an order — online or in-person |
+| Book a Table | Reservation form with date, time, guests, location, and special requests |
+| Feedback | Customer feedback form with rating and branch selection |
+| About Us | Brand story, values, and a warm, coffee-house-inspired identity |
+| Locations | Multiple branches listed with opening hours |
+| Account Login/Signup | Customer accounts required to book or order, with email verification |
+| Google Sign-In | One-click sign-in via Google (django-allauth), auto-linked to existing accounts by email |
+| Staff Roles | Manager, Receptionist (Physical Orders), Receptionist (Online Orders) — each with role-gated tools |
+| Physical Order Desk | Walk-in order form for receptionists, tagging orders by source (physical vs. online) |
+| Admin Dashboard | Protected dashboard with stat cards for bookings, orders, and feedback |
+| REST API | Five endpoints built with Django REST Framework |
+| Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
 
 ---
 
-## 🗂 File Structure
-
-| 📊 Admin Dashboard | Protected dashboard with stat cards for bookings, orders, and feedback |
-| 🔌 REST API | Five endpoints built with Django REST Framework |
-| 📱 Responsive | Fully mobile-friendly — works on phones, tablets, and desktops |
-
----
-
-##  REST API Endpoints
+## REST API Endpoints
 
 Built with **Django REST Framework**. All endpoints are accessible at the base URL of the live demo, and each has a browsable API view in the browser.
 
@@ -71,7 +63,7 @@ Built with **Django REST Framework**. All endpoints are accessible at the base U
 
 ---
 
-##  Admin Dashboard
+## Admin Dashboard
 
 A protected admin dashboard is available at `/dashboard/` — only accessible to staff/superuser accounts.
 
@@ -92,7 +84,7 @@ python manage.py createsuperuser
 
 ---
 
-##  Authentication & Accounts
+## Authentication & Accounts
 
 - Customers must sign up or log in to book a table or place an order (`next` param redirects them back to what they clicked after logging in)
 - Manual `authenticate()`-based login flow in `customer_login.html` / `views.py`
@@ -101,7 +93,7 @@ python manage.py createsuperuser
 
 ---
 
-## 👥 Staff & Roles
+## Staff & Roles
 
 - `StaffProfile` model with three roles:
   - **Manager**
@@ -113,8 +105,7 @@ python manage.py createsuperuser
 
 ---
 
-
-##  Project Structure
+## Project Structure
 
 ```
 restaurant_booking/
@@ -128,7 +119,7 @@ restaurant_booking/
 │   ├── templates/
 │   │   ├── index.html          # Main website page
 │   │   ├── customer_login.html # Customer login/signup page (with Google Sign-In)
-│   │   ├── login.html          # Custom admin login page
+│   │   ├── staff_login.html    # Staff/admin login page
 │   │   └── dashboard.html      # Admin dashboard
 │   ├── static/
 │   │   ├── styles/
@@ -150,86 +141,7 @@ restaurant_booking/
 
 ---
 
-
-##  Running the Project
-
-### Requirements
-- Python 3.x
-- Django + django-allauth (see `requirements.txt`)
-
-### Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### Apply migrations
-```bash
-py manage.py migrate
-```
-
-### Create an admin superuser
-```bash
-py manage.py createsuperuser
-```
-
-**2. Create and activate a virtual environment**
-```bash
-py manage.py runserver
-```
-
-Then open your browser at:
-```
-http://127.0.0.1:8000/          → Main website
-http://127.0.0.1:8000/login/    → Customer login / signup (incl. Google Sign-In)
-http://127.0.0.1:8000/admin/    → Django admin dashboard
-```
-
-> **Note:** Email verification uses Django's console email backend in local development — verification links print to your terminal instead of sending real emails.
-
----
-
-##  Design & Branding
-
-Harvest & Hearth keeps the warm, coffee-house visual identity it started with:
-
-| Element | Value |
-|---|---|
-| Primary Accent | `#C97B3A` — Caramel |
-| Dark Background | `#1A0A00` — Espresso |
-| Light Background | `#F5EDD9` — Cream |
-| Heading Font | Playfair Display |
-| Body Font | Lato |
-| Logo Font | Dancing Script |
-
----
-
-## 🔐 Authentication & Accounts
-
-- Customers must sign up or log in to book a table or place an order (`next` param redirects them back to what they clicked after logging in)
-- Manual `authenticate()`-based login flow in `customer_login.html` / `views.py`
-- **Google Sign-In** via django-allauth — new Google logins auto-generate a username and link to an existing account by matching email (custom adapter in `core/adapters.py`), skipping allauth's manual signup form
-- **Email verification** required for username/password signups — blocks unverified accounts at login, without locking out pre-existing users who have no verification record
-
----
-
-##  Staff & Roles
-
-- `StaffProfile` model with three roles:
-  - **Manager**
-  - **Receptionist – Physical Orders**
-  - **Receptionist – Online Orders**
-- Superuser-only "Create Staff" page
-- Physical/walk-in order form for receptionists — orders tagged `source='physical'` or `source='online'`
-- Dashboard shows role-gated staff tools and order source/table info
-
----
-
-##  JavaScript Overview (`index.js`)
-
-## 🛠️ Tech Stack
-
-##  Tech Stack
-
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -244,7 +156,7 @@ Harvest & Hearth keeps the warm, coffee-house visual identity it started with:
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
 **1. Clone the repo**
 ```bash
@@ -291,7 +203,7 @@ http://127.0.0.1:8000/admin/      → Django admin
 
 ---
 
-##  Design & Branding
+## Design & Branding
 
 Harvest & Hearth keeps a warm, coffee-house visual identity:
 
@@ -306,10 +218,9 @@ Harvest & Hearth keeps a warm, coffee-house visual identity:
 
 ---
 
-## 🧠 JavaScript Overview (`index.js`)
+## JavaScript Overview (`index.js`)
 
-
-| Branch | Purpose |
+| Function | Purpose |
 |---|---|
 | `renderMenu(filter)` | Reads menu data and builds the cards on the page |
 | `switchTab(cat)` | Filters displayed items by category |
@@ -324,7 +235,7 @@ Harvest & Hearth keeps a warm, coffee-house visual identity:
 
 ---
 
-## 🍴 Adding a New Menu Item
+## Adding a New Menu Item
 
 Menu items are stored as objects in the `menuData` array inside `index.js`:
 
@@ -345,7 +256,7 @@ The page will automatically render it — no HTML changes needed.
 
 ---
 
-##  Branch Workflow
+## Branch Workflow
 
 This project uses a two-branch Git workflow:
 
@@ -373,7 +284,7 @@ Render watches `main` and auto-deploys on every push — no manual deploy steps 
 
 ---
 
-##  Deployment (Render)
+## Deployment (Render)
 
 The project is deployed on [Render](https://render.com) as a Web Service.
 
@@ -399,24 +310,21 @@ Every push to `main` triggers an automatic redeploy on Render.
 
 ---
 
-##  Roadmap
+## Roadmap
 
 | Feature | Status |
 |---|---|
-| Customer accounts, login, and email verification | ✅ Done |
-| Google Sign-In | ✅ Done |
-| Staff roles & physical order desk | ✅ Done |
-| REST API (menu, locations, bookings, orders, feedback) | ✅ Done |
-| Admin dashboard | ✅ Done |
-| Order status tracking | 🔜 In progress |
-| Menu management via API | 🔜 In progress |
-| Full customer profile page | 🔜 In progress |
-| PostgreSQL for production | 🔜 Planned |
+| Customer accounts, login, and email verification | Done |
+| Google Sign-In | Done |
+| Staff roles & physical order desk | Done |
+| REST API (menu, locations, bookings, orders, feedback) | Done |
+| Admin dashboard | Done |
+| Order status tracking | In progress |
+| Menu management via API | In progress |
+| Full customer profile page | In progress |
+| PostgreSQL for production | Planned |
 
 ---
 
-
-## ⚠️ Disclaimer
-
-Harvest & Hearth is an independent project built strictly for educational and portfolio purposes. Menu items, branch names, and location data are placeholder content for demonstration purposes only.
+## Disclaimer
 
