@@ -90,6 +90,7 @@ python manage.py createsuperuser
 - Manual `authenticate()`-based login flow in `customer_login.html` / `views.py`
 - **Google Sign-In** via django-allauth — new Google logins auto-generate a username and link to an existing account by matching email (custom adapter in `core/adapters.py`), skipping allauth's manual signup form
 - **Email verification** required for username/password signups — blocks unverified accounts at login, without locking out pre-existing users who have no verification record
+- **Password reset** flow via django-allauth — branded request, "check your email," set-new-password, and expired-link pages, sharing a common base template
 
 ---
 
@@ -107,37 +108,43 @@ python manage.py createsuperuser
 
 ## Project Structure
 
-```
 restaurant_booking/
-├── cafejavas/                  # Django project settings
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│   └── asgi.py
-├── core/                       # Django app
-│   ├── adapters.py             # Custom allauth adapter (Google sign-in auto-linking)
-│   ├── templates/
-│   │   ├── index.html          # Main website page
-│   │   ├── customer_login.html # Customer login/signup page (with Google Sign-In)
-│   │   ├── staff_login.html    # Staff/admin login page
-│   │   └── dashboard.html      # Admin dashboard
-│   ├── static/
-│   │   ├── styles/
-│   │   │   └── index.css       # All styling and responsive layout
-│   │   └── scripts/
-│   │       └── index.js        # Menu data, cart logic, and interactions
-│   ├── views.py                # Template views + API views
-│   ├── serializers.py          # DRF serializers for all models
-│   ├── forms.py                # Django forms for template-based submissions
-│   ├── urls.py                 # All URL patterns (template + API routes)
-│   ├── models.py               # TableBooking, Order, OrderItem, MenuItem, Location, CustomerFeedback, StaffProfile
-│   └── admin.py                # Django admin registration
-├── manage.py                   # Django management commands
+├── cafejavas/ # Django project settings
+│ ├── settings.py
+│ ├── urls.py
+│ ├── wsgi.py
+│ └── asgi.py
+├── core/ # Django app
+│ ├── adapters.py # Custom allauth adapter (Google sign-in auto-linking)
+│ ├── templates/
+│ │ ├── index.html # Main website page
+│ │ ├── customer_login.html # Customer login/signup page (with Google Sign-In)
+│ │ ├── customer_signup.html # Customer account creation page
+│ │ ├── staff_login.html # Staff/admin login page
+│ │ ├── dashboard.html # Admin dashboard
+│ │ ├── create_staff.html # Superuser-only staff creation page
+│ │ ├── physical_order.html # Walk-in order desk for receptionists
+│ │ └── account/
+│ │ ├── auth_base.html # Shared base template for auth pages
+│ │ ├── password_reset.html # Request reset link
+│ │ ├── password_reset_done.html # "Check your email" confirmation
+│ │ └── password_reset_from_key.html # Set new password / expired link
+│ ├── static/
+│ │ ├── styles/
+│ │ │ └── index.css # All styling and responsive layout
+│ │ └── scripts/
+│ │ └── index.js # Menu data, cart logic, and interactions
+│ ├── views.py # Template views + API views
+│ ├── serializers.py # DRF serializers for all models
+│ ├── forms.py # Django forms for template-based submissions
+│ ├── urls.py # All URL patterns (template + API routes)
+│ ├── models.py # TableBooking, Order, OrderItem, MenuItem, Location, CustomerFeedback, StaffProfile
+│ └── admin.py # Django admin registration
+├── manage.py # Django management commands
 ├── requirements.txt
-├── build.sh                    # Render build script (collectstatic + migrate)
+├── build.sh # Render build script (collectstatic + migrate)
 ├── README.md
 └── .gitignore
-```
 
 ---
 
@@ -148,13 +155,12 @@ restaurant_booking/
 | Frontend | HTML5, CSS3, Vanilla JavaScript |
 | Backend | Python 3, Django 5 |
 | REST API | Django REST Framework |
-| Auth | django-allauth (Google Sign-In, email verification) |
+| Auth | django-allauth (Google Sign-In, email verification, password reset) |
 | Database | SQLite (development) |
 | Static files | WhiteNoise |
 | Deployment | Render (auto-deploy from GitHub) |
 | Version control | Git + GitHub (main / dev branch workflow) |
 
----
 
 ## Running Locally
 
@@ -192,139 +198,3 @@ python manage.py runserver
 ```
 
 Then visit:
-```
-http://127.0.0.1:8000/            → Main website
-http://127.0.0.1:8000/login/      → Customer login / signup (incl. Google Sign-In)
-http://127.0.0.1:8000/dashboard/  → Admin dashboard
-http://127.0.0.1:8000/admin/      → Django admin
-```
-
-> **Note:** Email verification uses Django's console email backend in local development — verification links print to your terminal instead of sending real emails.
-
----
-
-## Design & Branding
-
-Harvest & Hearth keeps a warm, coffee-house visual identity:
-
-| Element | Value |
-|---|---|
-| Primary Accent | `#C97B3A` — Caramel |
-| Dark Background | `#1A0A00` — Espresso |
-| Light Background | `#F5EDD9` — Cream |
-| Heading Font | Playfair Display |
-| Body Font | Lato |
-| Logo Font | Dancing Script |
-
----
-
-## JavaScript Overview (`index.js`)
-
-| Function | Purpose |
-|---|---|
-| `renderMenu(filter)` | Reads menu data and builds the cards on the page |
-| `switchTab(cat)` | Filters displayed items by category |
-| `addToCart(id)` | Adds a dish to the cart |
-| `removeFromCart(id)` | Reduces quantity or removes item from cart |
-| `updateCartUI()` | Refreshes the cart sidebar with current items and total price |
-| `checkout()` | Submits the order and shows a confirmation |
-| `submitBooking()` | Validates and confirms a table reservation |
-| `showToast(msg)` | Displays a brief notification pop-up |
-| `showModal(...)` | Shows a full confirmation dialog |
-| `toggleMenu()` | Opens or closes the mobile navigation menu |
-
----
-
-## Adding a New Menu Item
-
-Menu items are stored as objects in the `menuData` array inside `index.js`:
-
-```js
-{
-  id: 25,                  // Must be unique
-  cat: 'mains',            // breakfast | mains | drinks | desserts
-  name: 'Rolex',           // Display name
-  desc: 'Ugandan street food — egg and veggies rolled in a chapati.',
-  price: 15000,            // Price in UGX (number, no quotes)
-  badge: 'Local Fave',     // Optional tag shown on the card
-  emoji: '🌯',             // Shown in the cart
-  img: 'https://...'       // Food image URL
-}
-```
-
-The page will automatically render it — no HTML changes needed.
-
----
-
-## Branch Workflow
-
-This project uses a two-branch Git workflow:
-
-| Branch | Purpose |
-|---|---|
-| `main` | Stable branch — always reflects what's live on Render |
-| `dev` | Working branch — all new features are built here |
-
-**Workflow:**
-```bash
-# Always work on dev
-git checkout dev
-
-# Build and commit changes
-git add .
-git commit -m "Description of change"
-
-# When ready to go live, merge to main
-git checkout main
-git merge dev
-git push origin main
-```
-
-Render watches `main` and auto-deploys on every push — no manual deploy steps needed.
-
----
-
-## Deployment (Render)
-
-The project is deployed on [Render](https://render.com) as a Web Service.
-
-**Build Command:**
-```bash
-./build.sh
-```
-
-**Start Command:**
-```bash
-gunicorn cafejavas.wsgi:application
-```
-
-**`build.sh` contents:**
-```bash
-#!/usr/bin/env bash
-set -o errexit
-python manage.py collectstatic --no-input
-python manage.py migrate
-```
-
-Every push to `main` triggers an automatic redeploy on Render.
-
----
-
-## Roadmap
-
-| Feature | Status |
-|---|---|
-| Customer accounts, login, and email verification | Done |
-| Google Sign-In | Done |
-| Staff roles & physical order desk | Done |
-| REST API (menu, locations, bookings, orders, feedback) | Done |
-| Admin dashboard | Done |
-| Order status tracking | In progress |
-| Menu management via API | In progress |
-| Full customer profile page | In progress |
-| PostgreSQL for production | Planned |
-
----
-
-## Disclaimer
-

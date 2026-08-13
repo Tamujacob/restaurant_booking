@@ -33,7 +33,7 @@ def home(request):
         form = TableBookingForm(request.POST)
         if form.is_valid():
             booking = form.save()
-            messages.success(request, f"Thank you, {booking.first_name}! Your table at Café Javas {booking.get_location_display()} is reserved for {booking.date} at {booking.time}.")
+            messages.success(request, f"Thank you, {booking.first_name}! Your table at Harvest & Hearth {booking.get_location_display()} is reserved for {booking.date} at {booking.time}.")
             return redirect('home')
         else:
             messages.error(request, "Something went wrong. Please check your details and try again.")
@@ -142,8 +142,10 @@ def customer_signup(request):
             EmailAddress.objects.add_email(request, user, user.email, confirm=True)
             messages.success(request, "Account created! Check your email (or the terminal, in dev) to verify your account before logging in.")
             return redirect('customer_login')
+    else:
+        form = CustomerSignupForm()
 
-
+    return render(request, 'customer_signup.html', {'form': form})
 # ── Customer Login ───────────────────────────────────────────
 
 def customer_login(request):
