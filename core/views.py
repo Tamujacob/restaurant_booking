@@ -142,8 +142,10 @@ def customer_signup(request):
             EmailAddress.objects.add_email(request, user, user.email, confirm=True)
             messages.success(request, "Account created! Check your email (or the terminal, in dev) to verify your account before logging in.")
             return redirect('customer_login')
+    else:
+        form = CustomerSignupForm()
 
-
+    return render(request, 'customer_signup.html', {'form': form})
 # ── Customer Login ───────────────────────────────────────────
 
 def customer_login(request):
