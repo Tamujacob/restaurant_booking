@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
@@ -242,6 +243,23 @@ def toggle_user(request, user_id):
         user.save()
         toggle_status = "activated" if user.is_active else "deactivated"
         messages.success(request, f"{user.username} has been {toggle_status}.")
+    return redirect('dashboard')
+
+
+@staff_member_required
+@require_POST
+def update_order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    new_status = request.POST.get('status', '').strip()
+
+    valid_statuses = {value for value, _ in Order.STATUS_CHOICES}
+    if new_status not in valid_statuses:
+        messages.error(request, 'Invalid order status selected.')
+        return redirect('dashboard')
+
+    order.status = new_status
+    order.save(update_fields=['status', 'updated_at'])
+    messages.success(request, f"Order #{order.id} is now marked as {order.get_status_display()}.")
     return redirect('dashboard')
 
 

@@ -9,6 +9,7 @@ urlpatterns = [
     path('feedback/', views.submit_feedback, name='submit_feedback'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/toggle-user/<int:user_id>/', views.toggle_user, name='toggle_user'),
+    path('dashboard/order-status/<int:order_id>/', views.update_order_status, name='update_order_status'),
 
     #  Auth routes
     path('signup/', views.customer_signup, name='customer_signup'),
