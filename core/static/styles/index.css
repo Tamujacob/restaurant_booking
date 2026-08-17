@@ -938,30 +938,42 @@ section { padding: 90px 60px; }
 }
 
 /* ─── STAR RATING ────────────────────────────────── */
-.star-rating {
+.feedback-stars {
+  margin-top: 8px;
+}
+
+.feedback-stars .feedback-stars-input {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
-  gap: 4px;
+  gap: 8px;
   list-style: none;
   padding: 0;
 }
 
-.star-rating li { display: inline; }
-
-.star-rating input[type="radio"] { display: none; }
-
-.star-rating label {
-  font-size: 2.5rem;
-  color: var(--latte);
-  cursor: pointer;
-  transition: color 0.2s;
+.feedback-stars .feedback-stars-input li {
+  display: inline-block;
 }
 
-.star-rating input[type="radio"]:checked ~ label,
-.star-rating label:hover,
-.star-rating label:hover ~ label {
+.feedback-stars .feedback-stars-input input {
+  display: none;
+}
+
+.feedback-stars .feedback-stars-input label {
+  font-size: 2.2rem;
+  line-height: 1;
+  color: rgba(255,255,255,0.28);
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease, text-shadow 0.15s ease;
+  user-select: none;
+}
+
+.feedback-stars .feedback-stars-input input:checked + label,
+.feedback-stars .feedback-stars-input label:hover,
+.feedback-stars .feedback-stars-input label:hover ~ label {
   color: var(--caramel);
+  text-shadow: 0 0 12px rgba(201, 123, 58, 0.4);
+  transform: translateY(-1px) scale(1.04);
 }
 
 /* ─── FOOTER ─────────────────────────────────────── */

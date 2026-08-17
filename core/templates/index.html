@@ -374,7 +374,9 @@
 
         <div class="form-group">
           <label class="form-label">Your Rating</label>
-          {{ feedback_form.rating }}
+          <div class="feedback-stars" aria-label="Rate your experience">
+            {{ feedback_form.rating }}
+          </div>
         </div>
 
         <div class="form-group">
