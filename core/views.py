@@ -13,7 +13,7 @@ import json
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions, viewsets
 
 from allauth.account.models import EmailAddress
 
@@ -23,6 +23,17 @@ from .serializers import (
     MenuItemSerializer, LocationSerializer,
     OrderSerializer, FeedbackSerializer, TableBookingSerializer,
 )
+
+
+class IsStaffUser(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_authenticated and request.user.is_staff)
+
+
+class MenuItemViewSet(viewsets.ModelViewSet):
+    queryset = MenuItem.objects.all().order_by('name')
+    serializer_class = MenuItemSerializer
+    permission_classes = [IsStaffUser]
 
 
 def home(request):

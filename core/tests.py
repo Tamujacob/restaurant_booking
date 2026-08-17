@@ -1,8 +1,61 @@
+import json
+
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
 
-from .models import Order
+from .models import MenuItem, Order
+
+
+class MenuApiStaffAccessTests(TestCase):
+    def setUp(self):
+        self.staff_user = User.objects.create_user(
+            username='staffapi',
+            password='secret123',
+            is_staff=True,
+        )
+        self.customer = User.objects.create_user(
+            username='customerapi',
+            password='secret123',
+        )
+
+    def test_staff_can_create_menu_item_via_api(self):
+        self.client.login(username='staffapi', password='secret123')
+        payload = {
+            'cat': 'mains',
+            'name': 'Beef Bowl',
+            'desc': 'Grilled beef with rice',
+            'price': 18000,
+            'badge': 'Chef Pick',
+            'emoji': '🍲',
+            'img': 'https://example.com/beef.jpg',
+            'is_available': True,
+        }
+        response = self.client.post(
+            reverse('menuitem-list'),
+            data=json.dumps(payload),
+            content_type='application/json',
+        )
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(MenuItem.objects.filter(name='Beef Bowl').exists())
+
+    def test_customer_cannot_create_menu_item_via_api(self):
+        self.client.login(username='customerapi', password='secret123')
+        payload = {
+            'cat': 'mains',
+            'name': 'Illegal Item',
+            'desc': 'Should fail',
+            'price': 5000,
+            'emoji': '🚫',
+            'img': 'https://example.com/illegal.jpg',
+        }
+        response = self.client.post(
+            reverse('menuitem-list'),
+            data=json.dumps(payload),
+            content_type='application/json',
+        )
+        self.assertEqual(response.status_code, 403)
+        self.assertFalse(MenuItem.objects.filter(name='Illegal Item').exists())
 
 
 class OrderStatusTrackingTests(TestCase):

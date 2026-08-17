@@ -938,30 +938,44 @@ section { padding: 90px 60px; }
 }
 
 /* ─── STAR RATING ────────────────────────────────── */
-.star-rating {
+.playstore-rating {
   display: flex;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
-  gap: 4px;
-  list-style: none;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.star-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.star-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 2.4rem;
+  line-height: 1;
   padding: 0;
-}
-
-.star-rating li { display: inline; }
-
-.star-rating input[type="radio"] { display: none; }
-
-.star-rating label {
-  font-size: 2.5rem;
-  color: var(--latte);
   cursor: pointer;
-  transition: color 0.2s;
+  transition: transform 0.15s ease, color 0.15s ease, text-shadow 0.15s ease;
 }
 
-.star-rating input[type="radio"]:checked ~ label,
-.star-rating label:hover,
-.star-rating label:hover ~ label {
-  color: var(--caramel);
+.star-btn:hover,
+.star-btn.active {
+  color: #f5b400;
+  text-shadow: 0 0 12px rgba(245, 180, 0, 0.35);
+  transform: translateY(-1px) scale(1.04);
+}
+
+.rating-result {
+  min-height: 18px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
 }
 
 /* ─── FOOTER ─────────────────────────────────────── */

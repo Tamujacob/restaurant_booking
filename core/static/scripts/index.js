@@ -154,8 +154,58 @@ function toggleMenu() {
 }
 
 // INIT 
+function setupFeedbackRating() {
+  const stars = document.querySelectorAll('.star-btn');
+  const ratingResult = document.getElementById('ratingResult');
+  const ratingValue = document.getElementById('ratingValue');
+
+  if (!stars.length || !ratingResult || !ratingValue) return;
+
+  const labels = {
+    1: 'Very poor',
+    2: 'Fair',
+    3: 'Average',
+    4: 'Good',
+    5: 'Excellent'
+  };
+
+  const updateSelection = (value) => {
+    ratingValue.value = value;
+    stars.forEach(star => {
+      const starValue = Number(star.dataset.value);
+      const active = starValue <= Number(value);
+      star.classList.toggle('active', active);
+      star.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    ratingResult.textContent = `${value}/5 — ${labels[value]}`;
+  };
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => updateSelection(star.dataset.value));
+    star.addEventListener('mouseenter', () => {
+      const hoverValue = Number(star.dataset.value);
+      stars.forEach(item => {
+        const itemValue = Number(item.dataset.value);
+        item.classList.toggle('active', itemValue <= hoverValue);
+      });
+    });
+  });
+
+  const starRow = document.getElementById('feedbackStars');
+  if (starRow) {
+    starRow.addEventListener('mouseleave', () => {
+      const currentValue = Number(ratingValue.value || 0);
+      stars.forEach(star => {
+        const starValue = Number(star.dataset.value);
+        star.classList.toggle('active', starValue <= currentValue);
+      });
+    });
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   updateCartUI();
+  setupFeedbackRating();
 
   // Set min date for booking to today
   const today = new Date().toISOString().split('T')[0];

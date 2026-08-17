@@ -162,9 +162,9 @@ class CustomerFeedbackForm(forms.ModelForm):
             }),
 
             'rating': forms.RadioSelect(attrs={
-                'class': 'star-rating',
+                'class': 'feedback-stars-input',
             }),
-              'message': forms.Textarea(attrs={
+            'message': forms.Textarea(attrs={
                 'class': 'form-textarea',
                 'placeholder': 'Write your message here.',
                 'id': 'bookNote',

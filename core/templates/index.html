@@ -374,7 +374,17 @@
 
         <div class="form-group">
           <label class="form-label">Your Rating</label>
-          {{ feedback_form.rating }}
+          <div class="playstore-rating" aria-label="Rate your experience">
+            <div class="star-row" id="feedbackStars">
+              <button type="button" class="star-btn" data-value="1" aria-label="1 star">★</button>
+              <button type="button" class="star-btn" data-value="2" aria-label="2 stars">★</button>
+              <button type="button" class="star-btn" data-value="3" aria-label="3 stars">★</button>
+              <button type="button" class="star-btn" data-value="4" aria-label="4 stars">★</button>
+              <button type="button" class="star-btn" data-value="5" aria-label="5 stars">★</button>
+            </div>
+            <div class="rating-result" id="ratingResult">Select a rating</div>
+            <input type="hidden" name="rating" id="ratingValue" value="" required>
+          </div>
         </div>
 
         <div class="form-group">

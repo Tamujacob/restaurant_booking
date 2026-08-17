@@ -1,5 +1,9 @@
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
+
+router = DefaultRouter()
+router.register(r'api/manage/menu', views.MenuItemViewSet, basename='menuitem')
 
 urlpatterns = [
 
@@ -28,3 +32,7 @@ urlpatterns = [
 
     path('accounts/', include('allauth.urls')),
 ]
+
+urlpatterns += router.urls
+
+urlpatterns += router.urls
