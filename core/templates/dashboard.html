@@ -182,6 +182,8 @@
     .badge-cancelled        { background: rgba(239,68,68,.15);   color: #ef4444; }
     .badge-completed        { background: rgba(99,102,241,.15);  color: #6366f1; }
     .badge-approved         { background: rgba(16,185,129,.15);  color: #10b981; }
+    .badge-preparing        { background: rgba(245,158,11,.15);  color: #f59e0b; }
+    .badge-ready            { background: rgba(20,184,166,.15);  color: #14b8a6; }
     .badge-out_for_delivery { background: rgba(99,102,241,.15);  color: #6366f1; }
     .badge-delivered        { background: rgba(16,185,129,.3);   color: #10b981; }
     .badge-active           { background: rgba(16,185,129,.15);  color: #10b981; }
@@ -193,6 +195,20 @@
     .badge-physical         { background: rgba(234,179,8,.15);   color: #eab308; }
 
     /* ACTION BUTTONS */
+    .status-form {
+      display: flex; align-items: center; gap: 8px;
+      flex-wrap: wrap;
+    }
+    .order-status-select {
+      appearance: none; background: rgba(255,255,255,.04); color: var(--cream);
+      border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px;
+      font-size: 12px; min-width: 130px;
+    }
+    .status-submit {
+      background: rgba(201,123,58,.14); border: 1px solid rgba(201,123,58,.35);
+      color: var(--caramel); padding: 6px 10px; border-radius: 6px; cursor: pointer;
+      font-size: 12px; font-weight: 700; font-family: 'Lato', sans-serif;
+    }
     .btn-deactivate {
       background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3);
       color: #ef4444; padding: 4px 12px; border-radius: 6px;
@@ -461,7 +477,7 @@
         <thead>
           <tr>
             <th>Name</th><th>Source</th><th>Table / Delivery</th>
-            <th>Handled by</th><th>Total</th><th>Status</th><th>Date</th>
+            <th>Handled by</th><th>Total</th><th>Status</th><th>Update</th><th>Date</th>
           </tr>
         </thead>
         <tbody>
@@ -485,6 +501,17 @@
             <td style="color:var(--muted);">{{ o.handled_by.username|default:"—" }}</td>
             <td style="color:#10b981;font-weight:700;">UGX {{ o.total_price|floatformat:0 }}</td>
             <td><span class="badge badge-{{ o.status }}">{{ o.get_status_display }}</span></td>
+            <td>
+              <form method="post" action="{% url 'update_order_status' o.id %}" class="status-form">
+                {% csrf_token %}
+                <select name="status" class="order-status-select">
+                  {% for value, label in o.STATUS_CHOICES %}
+                    <option value="{{ value }}" {% if o.status == value %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit" class="status-submit">Save</button>
+              </form>
+            </td>
             <td style="color:var(--muted);">{{ o.created_at|date:"M d, Y" }}</td>
           </tr>
           {% endfor %}
