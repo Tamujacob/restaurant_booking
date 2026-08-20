@@ -197,4 +197,4 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-Then visit:
+Then visit:127.0.0.1/8080
